@@ -7,5 +7,8 @@ Node, Express, Babel, Webpack, React, Redux
 
 On y va!
 
-TODO: 
-
+TODO:
+- [ ] Decide on data model
+- [ ] Explore translation APIs (Yandex?)
+- [ ] Decide on practice strategies - defining a noun, answering a prompt, etc.
+- [ ] Mock up basic design - use Sketch?
