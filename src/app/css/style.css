@@ -1,2 +1,98 @@
 #container {
+  font-family: "Trebuchet MS", "Times New Roman";
+  max-width: 950px;
+  margin: 0 auto;
+  padding: 1em;
+  border: 1px solid gray;
+}
+
+#vocab-form {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.create-vocab-field {
+  margin: 1em 0;
+}
+
+.nav {
+  margin-bottom: 1em;
+}
+
+.nav-item {
+  color: green;
+  font-size: 1.5em;
+  font-weight: bold;
+  text-decoration: none;
+  padding: 0 1em;
+}
+
+.first {
+  padding-left: 0;
+}
+
+.practice-strategy {
+  display: inline;
+  margin: 1em;
+  cursor: pointer;
+}
+
+.strategies {
+  border: 1px solid gray;
+  margin-bottom: 1em;
+  padding: 1em;
+}
+
+.active {
+  background-color: yellow;
+  border: 1px solid gray;
+}
+
+.vocab-option {
+  display: inline;
+  margin-right: 2em;
+}
+
+.vocab-input {
+  width: 3em;
+}
+
+.fetch-vocab {
+  border-left: 1px solid gray;
+  padding-left: 1em;
+  cursor: pointer;
+}
+
+.practice-area {
+  border-top: 1px solid gray;
+  margin-top: 1em;
+  position: relative;
+}
+
+.vocab-type {
+  border-bottom: 1px solid gray;
+  font-style: italic;
+  margin: 1em 0;
+}
+
+.vocab-section {
+  margin-right: 1em;
+}
+
+.vocab-list-container {
+  width: 25%;
+}
+
+.practice-input {
+  border: 1px solid gray;
+  bottom: 0;
+  margin-top: 1em;
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 75%;
+}
+
+.no-vocab {
+  display: none;
 }
