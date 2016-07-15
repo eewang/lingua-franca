@@ -11,10 +11,6 @@
   margin: 0 auto;
 }
 
-.create-vocab-field {
-  margin: 1em 0;
-}
-
 .nav {
   margin-bottom: 1em;
 }
@@ -32,9 +28,14 @@
 }
 
 .practice-strategy {
-  display: inline;
-  margin: 1em;
+  display: inline-block;
+  padding: 0.5em;
   cursor: pointer;
+}
+
+.practice-strategy.active {
+  background-color: yellow;
+  border: 1px solid gray;
 }
 
 .strategies {
@@ -43,29 +44,48 @@
   padding: 1em;
 }
 
-.active {
-  background-color: yellow;
-  border: 1px solid gray;
+.strategy-prompts {
+  border-bottom: 1px dashed gray;
+  border-top: 1px dashed gray;
+  margin-top: 1em;
+  padding: 1em;
+  min-height: 2em;
+}
+
+.prompt-option {
+  line-height: 2em;
+  font-weight: bold;
 }
 
 .vocab-option {
   display: inline;
-  margin-right: 2em;
+  margin-right: 1em;
+  font-size: 30px;
+  height: 16px;
 }
 
 .vocab-input {
-  width: 3em;
+  width: 2em;
+  height: 30px;
+  line-height: 30px;
+  vertical-align: middle;
+  font-size: 22px;
 }
 
 .fetch-vocab {
   border-left: 1px solid gray;
-  padding-left: 1em;
+  border-right: 1px solid gray;
+  float: right;
+  color: white;
+  background-color: green;
   cursor: pointer;
+  margin-left: 0.5em;
+  padding: 0.5em;
 }
 
 .practice-area {
-  border-top: 1px solid gray;
   margin-top: 1em;
+  min-height: 30em;
   position: relative;
 }
 
@@ -83,7 +103,7 @@
   width: 25%;
 }
 
-.practice-input {
+.editor-wrapper {
   border: 1px solid gray;
   bottom: 0;
   margin-top: 1em;
@@ -93,6 +113,100 @@
   width: 75%;
 }
 
-.no-vocab {
+.display-word {
+  font-size: 1.3em;
+}
+
+.display-translation {
   display: none;
+  font-size: 0.8em;
+  margin-left: 1em;
+}
+
+#toolbar {
+  padding-left: 1em;
+  border-bottom: 1px solid gray;
+
+}
+
+.practice-input {
+  font-size: 1em !important;
+  margin-left: 1em;
+  margin-top: 1em;
+  width: 100%;
+}
+
+.vocab-word {
+  cursor: pointer;
+}
+
+.vocab-word.active .display-translation {
+  display: block;
+}
+
+.hide {
+  display: none !important;
+}
+
+.editor-wrapper.no-vocab {
+  position: static;
+  max-height: 30em;
+  width: 100%;
+}
+
+/* Same styles as .fetch-vocab - TODO: Move to some sass mixin */
+.new-prompt-btn, .practice-area-action-btn {
+  border-left: 1px solid gray;
+  border-right: 1px solid gray;
+  float: right;
+  color: white;
+  background-color: green;
+  cursor: pointer;
+  margin-left: 0.5em;
+  padding: 0.5em;
+}
+
+.input-wrapper {
+  display: flex;
+  margin: 1em 0;
+}
+
+.text-input {
+  width: 50%;
+}
+
+.input-label {
+  width: 6em;
+}
+
+.char {
+  border: 1px solid gray;
+  cursor: pointer;
+  padding: 2px 6px;
+  margin: 0 4px;
+}
+
+.close-translation {
+  position: absolute;
+  top: 0;
+  right: 0;
+  cursor: pointer;
+  margin-top: 3px;
+}
+
+.translation-text {
+  display: none;
+  font-style: italic;
+}
+
+.visible {
+  display: block !important;
+}
+
+.translation-wrapper {
+  margin: 1em;
+  border-top: 1px dashed gray;
+  border-bottom: 1px dashed gray;
+  padding: 1em 0;
+  position: relative;
 }

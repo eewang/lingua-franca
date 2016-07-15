@@ -5,9 +5,10 @@ import { Provider } from 'react-redux';
 import classNames from 'classnames';
 import { store } from './js/reducers';
 import ActiveStrategy from './js/containers/ActiveStrategy';
-import ActiveVocabSelector from './js/containers/ActiveVocabSelector';
 import ActivePracticeArea from './js/containers/ActivePracticeArea';
-import { fetchVocab } from './js/actions';
+import ActiveVocabArea from './js/containers/ActiveVocabArea';
+import SelectPrompt from './js/containers/SelectPrompt';
+import { setLanguage, fetchPrompt } from './js/actions';
 
 require('./css/style.css');
 
@@ -15,17 +16,77 @@ const Practice = React.createClass({
   strategies() {
     return this.props.strategies.map((strategy, index) => {
       return (
-        <ActiveStrategy label={strategy} key={index}/>
+        <ActiveStrategy label={strategy.label} slug={strategy.slug} key={index}/>
       );
     });
+  },
+
+  // TODO: Move to a server call
+  prompts() {
+    return [
+      "Live anywhere in the world, where would you live?",
+      "Go anyplace for Christmas, where would you go?",
+      "Go on a road trip with any person (dead or alive), who would you choose and where would you go?"
+    ]
+  },
+
+  randomPrompt() {
+    return this.prompts()[Math.floor(Math.random() * this.prompts().length)];
+  },
+
+  renderPrompts() {
+    return (
+      <div>{this.randomPrompt()}</div>
+    )
+  },
+
+  getNewPrompt() {
+    store.dispatch(fetchPrompt(store.getState().activeStrategy));
   },
 
   render() {
     return (
       <div className='strategies'>
         {this.strategies()}
+        <span className="new-prompt-btn" onClick={this.getNewPrompt}>Shuffle</span>
+        <div className="strategy-prompts">
+          <SelectPrompt/>
+        </div>
       </div>
     );
+  }
+});
+
+const PromptForm = React.createClass({
+  render() {
+    return (
+      <div>
+        <h2>Create Question Prompt</h2>
+        <form action="/create_prompt" method="POST">
+          <div className="input-wrapper">
+            <label className="input-label">Type:</label>
+            <select name="type">
+              <option value="describe">Describe a Phrase</option>
+              <option value="answer">Answer a Question</option>
+              <option value="tell">Tell a Story</option>
+              <option value="translate">Translate a Sentence</option>
+            </select>
+          </div>
+          <div className="input-wrapper">
+            <label className="input-label">Language:</label>
+            <select name="lang">
+              <option value="french">Francais</option>
+              <option value="english">English</option>
+            </select>
+          </div>
+          <div className="input-wrapper">
+            <label className="input-label">Prompt:</label>
+            <input type="text" name="prompt" className="text-input"></input>
+          </div>
+          <button type="submit">Submit</button>
+        </form>
+      </div>
+    )
   }
 });
 
@@ -35,17 +96,20 @@ const VocabForm = React.createClass({
       <div>
         <h2>Create Vocabulary</h2>
         <form action="/create_vocab" method="POST">
-          <div className="create-vocab-field">
-            Word: <input type="text" name="word"></input>
+          <div className="input-wrapper">
+            <label className="input-label">Word:</label>
+            <input type="text" name="word" className="text-input"></input>
           </div>
-          <div className="create-vocab-field">
-            Gender: <input type="text" name="gender"></input>
+          <div className="input-wrapper">
+            <label className="input-label">Gender:</label>
+            <input type="text" name="gender"></input>
           </div>
-          <div className="create-vocab-field">
-            Translation: <input type="text" name="translation"></input>
+          <div className="input-wrapper">
+            <label className="input-label">Translation:</label>
+            <input type="text" name="translation" className="text-input"></input>
           </div>
-          <div className="create-vocab-field">
-            Type
+          <div className="input-wrapper">
+            <label className="input-label">Type:</label>
             <select name="type">
               <option value="verb">Verb</option>
               <option value="noun">Noun</option>
@@ -58,6 +122,17 @@ const VocabForm = React.createClass({
     )
   }
 });
+
+const AdminWrapper = React.createClass({
+  render() {
+    return (
+      <div>
+        <VocabForm/>
+        <PromptForm/>
+      </div>
+    )
+  }
+})
 
 const NavItem = React.createClass({
   render() {
@@ -143,52 +218,48 @@ const App = React.createClass({
   }
 });
 
-const ConfigureStrategy = React.createClass({
-  onClick() {
-    store.dispatch(fetchVocab('verbs', store.getState().verbCount));
-    store.dispatch(fetchVocab('nouns', store.getState().nounCount));
-    store.dispatch(fetchVocab('adverbs', store.getState().adverbCount));
-  },
-
-  fetchVocabTypes() {
-    // TODO: Fetch from server
-    return ['verb', 'noun', 'adverb'];
-  },
-
-  render() {
-    return (
-      <div className='vocab-configure'>
-        {this.fetchVocabTypes().map((label) => {
-          return <ActiveVocabSelector label={label} vocabType={label}/>
-        })}
-        <span className='fetch-vocab' onClick={this.onClick}>Start</span>
-      </div>
-    )
-  }
-});
-
 const PracticeWrapper = React.createClass({
   fetchStrategies() {
     // TODO: Fetch from server
-    return ['Describe a word', 'Answer a prompt', 'Tell a story'];
+    return [
+      {slug: 'describe', label: 'Describe a phrase'},
+      {slug: 'answer', label: 'Answer a question'},
+      {slug: 'tell', label: 'Tell a story'},
+      {slug: 'translate', label: 'Translate a sentence'}
+    ];
   },
 
   render() {
     return (
       <div className='practice-wrapper'>
         <Practice strategies={this.fetchStrategies()}/>
-        <ConfigureStrategy/>
+        <ActiveVocabArea/>
         <ActivePracticeArea/>
       </div>
     )
   }
 });
 
+const ProgressWrapper = React.createClass({
+  componentDidMount() {
+    store.dispatch(fetchProgress());
+  },
+
+  render() {
+    return (
+      <div>
+        this is your progress
+      </div>
+    )
+  }
+})
+
 render((
   <Router history={browserHistory}>
     <Route path="/" component={App}>
-      <Route path="/admin" component={VocabForm}/>
+      <Route path="/admin" component={AdminWrapper}/>
       <Route path="/practice" component={PracticeWrapper}/>
+      <Route path="/progress" component={ProgressWrapper}/>
     </Route>
   </Router>
 ), document.getElementById('container'));

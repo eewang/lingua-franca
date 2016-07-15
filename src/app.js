@@ -3,10 +3,18 @@ import { render } from 'react-dom';
 // For logging form params
 import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
-import { Noun, Verb, Adverb } from './app/schemas.jsx';
+import {
+  Noun,
+  Verb,
+  Adverb,
+  Adjective,
+  Prompt,
+  PromptResponse }
+from './app/schemas.jsx';
 import parse from 'csv-parse';
 import fs from 'fs';
 import iconv from 'iconv-lite';
+import https from 'https';
 
 mongoose.connect('mongodb://localhost/lingua-franca');
 
@@ -55,14 +63,24 @@ var parseVerbs = parse({delimiter: ','}, (err, data) => {
 
 var parseAdverbs = parse({delimiter: ','}, (err, data) => {
   data.forEach((word) => {
-    console.log(word);
     var adverb = new Adverb({
       word: word[0].trim(),
       translation: word[1].trim()
     });
     adverb.save();
   })
-})
+});
+
+var parseAdjectives = parse({delimiter: ','}, (err, data) => {
+  data.forEach((word) => {
+    console.log(word);
+    var adverb = new Adjective({
+      word: word[0].trim(),
+      translation: word[1].trim()
+    });
+    adverb.save();
+  })
+});
 
 var fetchRandom = (req, res, model) => {
   var count = req.query.count || 5;
@@ -78,6 +96,61 @@ var fetchRandom = (req, res, model) => {
 
 app.get('/create_vocab', (req, res) => {
   res.render('vocab_form');
+});
+
+let YANDEX_API_KEY = "trnsl.1.1.20160714T194553Z.a3c1c9f925fde89e.3a618e650137dba5639014bad822bdb40644b238";
+
+app.get('/api/translate', (req, res) => {
+  var yandexHost = "https://translate.yandex.net"
+  var yandexPath = "/api/v1.5/tr.json/translate"
+  var params = {
+    key: YANDEX_API_KEY,
+    lang: 'en',
+    text: req.query.text
+  }
+
+  https.get(yandexHost + yandexPath + '?key=' + params.key + '&lang=' + params.lang + '&text=' + params.text, (yandexRes) => {
+    var body = '';
+    yandexRes.on('data', (data) => {
+      body += data;
+    });
+
+    yandexRes.on('end', () => {
+      res.json(body);
+    });
+  });
+});
+
+app.post('/create_prompt', (req, res) => {
+  var prompt = new Prompt({
+    type: req.body.type,
+    prompt: req.body.prompt,
+    lang: req.body.lang
+  });
+  prompt.save((err) => {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log('success!');
+    }
+  });
+  res.redirect('/admin');
+});
+
+app.get('/api/random_prompt', (req, res) => {
+  Prompt.find({}, '_id').where('type').in([req.query.type]).exec((err, ids) => {
+    var randomIds = shuffleArray(ids).slice(0, 1);
+    Prompt.findOne().where('_id').in(randomIds).exec((err, prompt) => {
+      if (!prompt) prompt = {type: 'question', prompt: ''}
+      res.json(prompt);
+    })
+  });
+});
+
+app.get('/api/progress', (req, res) => {
+  PromptResponse.find({}).exec((err, objs) => {
+    res.json(objs);
+  })
 });
 
 app.post('/create_vocab', (req, res) => {
@@ -121,7 +194,7 @@ app.post('/create_vocab', (req, res) => {
           console.log('success!');
         }
       });
-    res.redirect('/');
+    res.redirect('/admin');
   }
 
 });
@@ -129,18 +202,32 @@ app.post('/create_vocab', (req, res) => {
 app.get('/', (req, res) => {
   res.render('index');
 });
-//
-// app.get('/admin', (req, res) => {
-//   res.render('vocab_form');
-// })
+
+app.post('/api/response', (req, res) => {
+  var responsePrompt = new PromptResponse({
+    text: req.query.text,
+    prompt: req.query.prompt,
+    vocab: req.query.vocab
+  });
+  responsePrompt.save((err) => {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log('success');
+    }
+  });
+  res.json({success: true})
+})
 
 app.get('/parse_data', (req, res) => {
   Noun.collection.remove();
   Verb.collection.remove();
   Adverb.collection.remove();
+  Adjective.collection.remove();
   fs.createReadStream(__dirname + '/data/nouns.csv', {encoding: 'utf8'}).pipe(parseNouns);
   fs.createReadStream(__dirname + '/data/verbs.csv', {encoding: 'utf8'}).pipe(parseVerbs);
   fs.createReadStream(__dirname + '/data/adverbs.csv', {encoding: 'utf8'}).pipe(parseAdverbs);
+  fs.createReadStream(__dirname + '/data/adjectives.csv', {encoding: 'utf8'}).pipe(parseAdjectives);
 });
 
 app.get('/api/verbs', (req, res) => {
@@ -153,6 +240,10 @@ app.get('/api/nouns', (req, res) => {
 
 app.get('/api/adverbs', (req, res) => {
   fetchRandom(req, res, Adverb);
+});
+
+app.get('/api/adjectives', (req, res) => {
+  fetchRandom(req, res, Adjective);
 });
 
 app.get('*', (req, res) => {

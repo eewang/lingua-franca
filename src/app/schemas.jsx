@@ -19,15 +19,31 @@ const AdverbSchema = new Schema({
   translation: String
 });
 
-NounSchema.plugin(random);
-VerbSchema.plugin(random);
+const AdjectiveSchema = new Schema({
+  word: String,
+  translation: String
+});
 
-NounSchema.static('findByWord', function (word, callback) {
-  console.log(word);
-  console.log(callback());
-  // return this.find({word: word}, callback);
+const PromptSchema = new Schema({
+  type: String,
+  prompt: String,
+  lang: String
+})
+
+const PromptResponseSchema = new Schema({
+  text: String,
+  prompt: String,
+  vocab: [String],
+}, {
+  timestamps: {
+    createdAt: 'created_at',
+    updatedAt: 'updated_at'
+  }
 });
 
 export const Noun = mongoose.model('Noun', NounSchema);
 export const Verb = mongoose.model('Verb', VerbSchema);
 export const Adverb = mongoose.model('Adverb', AdverbSchema);
+export const Adjective = mongoose.model('Adjective', AdjectiveSchema);
+export const Prompt = mongoose.model('Prompt', PromptSchema);
+export const PromptResponse = mongoose.model('PromptResponse', PromptResponseSchema);

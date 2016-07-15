@@ -12,6 +12,7 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     onChange: (vocabType, count) => {
+      console.log(vocabType + ' | ' + count)
       dispatch(setVocabCount(vocabType, count))
     }
   }

@@ -4,7 +4,7 @@ import { activateStrategy } from '../actions';
 
 export const PracticeStrategy = React.createClass({
   onClick() {
-    return this.props.onStrategyClick(this.props.label);
+    return this.props.onStrategyClick(this.props.slug);
   },
 
   classes() {
