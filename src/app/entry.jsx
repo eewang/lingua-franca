@@ -7,8 +7,9 @@ import { store } from './js/reducers';
 import ActiveStrategy from './js/containers/ActiveStrategy';
 import ActivePracticeArea from './js/containers/ActivePracticeArea';
 import ActiveVocabArea from './js/containers/ActiveVocabArea';
+import ActiveProgressWrapper from './js/containers/ActiveProgressWrapper';
 import SelectPrompt from './js/containers/SelectPrompt';
-import { setLanguage, fetchPrompt } from './js/actions';
+import { setLanguage, fetchPrompt, fetchProgress } from './js/actions';
 
 require('./css/style.css');
 
@@ -240,26 +241,12 @@ const PracticeWrapper = React.createClass({
   }
 });
 
-const ProgressWrapper = React.createClass({
-  componentDidMount() {
-    store.dispatch(fetchProgress());
-  },
-
-  render() {
-    return (
-      <div>
-        this is your progress
-      </div>
-    )
-  }
-})
-
 render((
   <Router history={browserHistory}>
     <Route path="/" component={App}>
       <Route path="/admin" component={AdminWrapper}/>
       <Route path="/practice" component={PracticeWrapper}/>
-      <Route path="/progress" component={ProgressWrapper}/>
+      <Route path="/progress" component={ActiveProgressWrapper}/>
     </Route>
   </Router>
 ), document.getElementById('container'));

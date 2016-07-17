@@ -9,6 +9,8 @@ export const FETCH_PROMPT_SUCCESS = 'FETCH_PROMPT_SUCCESS';
 export const SET_RESPONSE_TEXT = 'SET_RESPONSE_TEXT';
 export const SET_TRANSLATED_TEXT = 'SET_TRANSLATED_TEXT';
 export const TOGGLE_TRANSLATION_DISPLAY = 'TOGGLE_TRANSLATION_DISPLAY';
+export const FETCH_PROGRESS_SUCCESS = 'FETCH_PROGRESS_SUCCESS';
+export const POST_RESPONSE_SUCCESS = 'POST_RESPONSE_SUCCESS';
 
 export function activateStrategy(strategy) {
   return {
@@ -64,6 +66,13 @@ export function fetchPromptSuccess(json) {
 //
 // }
 
+export function fetchProgressSuccess(json) {
+  return {
+    type: FETCH_PROGRESS_SUCCESS,
+    responses: json
+  }
+}
+
 export function setLanguage(lang) {
   return {
     type: SET_LANGUAGE,
@@ -90,13 +99,25 @@ export function setResponseText(text) {
   }
 }
 
-export function postResponse(text, prompt) {
+export function postResponseSuccess() {
+  return {
+    type: POST_RESPONSE_SUCCESS
+  }
+}
+
+export function postResponse(text, prompt, vocab) {
   return function (dispatch) {
     return fetch('api/response?text=' + text + '&prompt=' + prompt, {
-      method: 'post'
+      method: 'post',
+      body: JSON.stringify(vocab),
+      headers: new Headers({
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      })
     }).then((resp) => {
       return resp.json();
     }).then((json) => {
+      dispatch(postResponseSuccess());
     })
   }
 }
@@ -134,6 +155,16 @@ export function fetchVocab(vocabType, vocabTypeCount) {
       return resp.json();
     }).then((json) => {
       dispatch(fetchVocabSuccess(vocabType, json));
+    })
+  }
+}
+
+export function fetchProgress() {
+  return (dispatch) => {
+    return fetch('api/progress').then((resp) => {
+      return resp.json();
+    }).then((json) => {
+      dispatch(fetchProgressSuccess(json));
     })
   }
 }

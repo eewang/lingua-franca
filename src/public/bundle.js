@@ -74,7 +74,11 @@
 
 	var _ActiveVocabArea2 = _interopRequireDefault(_ActiveVocabArea);
 
-	var _SelectPrompt = __webpack_require__(269);
+	var _ActiveProgressWrapper = __webpack_require__(269);
+
+	var _ActiveProgressWrapper2 = _interopRequireDefault(_ActiveProgressWrapper);
+
+	var _SelectPrompt = __webpack_require__(271);
 
 	var _SelectPrompt2 = _interopRequireDefault(_SelectPrompt);
 
@@ -82,7 +86,7 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	__webpack_require__(271);
+	__webpack_require__(273);
 
 	var Practice = _react2.default.createClass({
 	  displayName: 'Practice',
@@ -412,17 +416,6 @@
 	  }
 	});
 
-	var ProgressWrapper = _react2.default.createClass({
-	  displayName: 'ProgressWrapper',
-	  render: function render() {
-	    return _react2.default.createElement(
-	      'div',
-	      null,
-	      'this is your progress'
-	    );
-	  }
-	});
-
 	(0, _reactDom.render)(_react2.default.createElement(
 	  _reactRouter.Router,
 	  { history: _reactRouter.browserHistory },
@@ -431,7 +424,7 @@
 	    { path: '/', component: App },
 	    _react2.default.createElement(_reactRouter.Route, { path: '/admin', component: AdminWrapper }),
 	    _react2.default.createElement(_reactRouter.Route, { path: '/practice', component: PracticeWrapper }),
-	    _react2.default.createElement(_reactRouter.Route, { path: '/progress', component: ProgressWrapper })
+	    _react2.default.createElement(_reactRouter.Route, { path: '/progress', component: _ActiveProgressWrapper2.default })
 	  )
 	), document.getElementById('container'));
 
@@ -28537,6 +28530,7 @@
 	exports.lang = lang;
 	exports.translation = translation;
 	exports.showTranslation = showTranslation;
+	exports.allResponses = allResponses;
 
 	var _actions = __webpack_require__(256);
 
@@ -28739,6 +28733,18 @@
 	  }
 	}
 
+	function allResponses() {
+	  var state = arguments.length <= 0 || arguments[0] === undefined ? [] : arguments[0];
+	  var action = arguments[1];
+
+	  switch (action.type) {
+	    case _actions.FETCH_PROGRESS_SUCCESS:
+	      return action.responses;
+	    default:
+	      return state;
+	  }
+	}
+
 	var reducers = (0, _redux.combineReducers)({
 	  activeStrategy: activeStrategy,
 	  verbCount: verbCount,
@@ -28750,7 +28756,8 @@
 	  prompt: prompt,
 	  showTranslation: showTranslation,
 	  translation: translation,
-	  isPlainPrompt: isPlainPrompt
+	  isPlainPrompt: isPlainPrompt,
+	  allResponses: allResponses
 	});
 
 	var store = exports.store = (0, _redux.createStore)(reducers, (0, _redux.applyMiddleware)(_reduxThunk2.default));
@@ -28771,14 +28778,17 @@
 	exports.requestPrompt = requestPrompt;
 	exports.fetchVocabSuccess = fetchVocabSuccess;
 	exports.fetchPromptSuccess = fetchPromptSuccess;
+	exports.fetchProgressSuccess = fetchProgressSuccess;
 	exports.setLanguage = setLanguage;
 	exports.fetchPrompt = fetchPrompt;
 	exports.setResponseText = setResponseText;
+	exports.postResponseSuccess = postResponseSuccess;
 	exports.postResponse = postResponse;
 	exports.fetchTranslatedTextSuccess = fetchTranslatedTextSuccess;
 	exports.toggleTranslation = toggleTranslation;
 	exports.translateText = translateText;
 	exports.fetchVocab = fetchVocab;
+	exports.fetchProgress = fetchProgress;
 	var SET_STRATEGY = exports.SET_STRATEGY = 'SET_STRATEGY';
 	var SET_VOCAB_COUNT = exports.SET_VOCAB_COUNT = 'SET_VOCAB_COUNT';
 	var START_PRACTICE = exports.START_PRACTICE = 'START_PRACTICE';
@@ -28790,6 +28800,8 @@
 	var SET_RESPONSE_TEXT = exports.SET_RESPONSE_TEXT = 'SET_RESPONSE_TEXT';
 	var SET_TRANSLATED_TEXT = exports.SET_TRANSLATED_TEXT = 'SET_TRANSLATED_TEXT';
 	var TOGGLE_TRANSLATION_DISPLAY = exports.TOGGLE_TRANSLATION_DISPLAY = 'TOGGLE_TRANSLATION_DISPLAY';
+	var FETCH_PROGRESS_SUCCESS = exports.FETCH_PROGRESS_SUCCESS = 'FETCH_PROGRESS_SUCCESS';
+	var POST_RESPONSE_SUCCESS = exports.POST_RESPONSE_SUCCESS = 'POST_RESPONSE_SUCCESS';
 
 	function activateStrategy(strategy) {
 	  return {
@@ -28845,6 +28857,13 @@
 	//
 	// }
 
+	function fetchProgressSuccess(json) {
+	  return {
+	    type: FETCH_PROGRESS_SUCCESS,
+	    responses: json
+	  };
+	}
+
 	function setLanguage(lang) {
 	  return {
 	    type: SET_LANGUAGE,
@@ -28871,13 +28890,26 @@
 	  };
 	}
 
-	function postResponse(text, prompt) {
+	function postResponseSuccess() {
+	  return {
+	    type: POST_RESPONSE_SUCCESS
+	  };
+	}
+
+	function postResponse(text, prompt, vocab) {
 	  return function (dispatch) {
 	    return fetch('api/response?text=' + text + '&prompt=' + prompt, {
-	      method: 'post'
+	      method: 'post',
+	      body: JSON.stringify(vocab),
+	      headers: new Headers({
+	        'Content-Type': 'application/json',
+	        'Accept': 'application/json'
+	      })
 	    }).then(function (resp) {
 	      return resp.json();
-	    }).then(function (json) {});
+	    }).then(function (json) {
+	      dispatch(postResponseSuccess());
+	    });
 	  };
 	}
 
@@ -28914,6 +28946,16 @@
 	      return resp.json();
 	    }).then(function (json) {
 	      dispatch(fetchVocabSuccess(vocabType, json));
+	    });
+	  };
+	}
+
+	function fetchProgress() {
+	  return function (dispatch) {
+	    return fetch('api/progress').then(function (resp) {
+	      return resp.json();
+	    }).then(function (json) {
+	      dispatch(fetchProgressSuccess(json));
 	    });
 	  };
 	}
@@ -29055,8 +29097,8 @@
 	    onChange: function onChange() {
 	      return null;
 	    },
-	    onSubmitText: function onSubmitText(text, prompt) {
-	      dispatch((0, _actions.postResponse)(text, prompt));
+	    onSubmitText: function onSubmitText(text, prompt, vocab) {
+	      dispatch((0, _actions.postResponse)(text, prompt, vocab));
 	    },
 	    translateText: function translateText(text) {
 	      dispatch((0, _actions.translateText)(text));
@@ -29102,11 +29144,12 @@
 	var SpecialChar = _react2.default.createClass({
 	  displayName: 'SpecialChar',
 	  onClick: function onClick() {
-	    var quill = new _quill2.default('.quill-editor');
-	    var currentText = quill.getText();
-	    quill.setText(currentText.trim() + this.props.char + '\n');
-	    quill.focus();
-	    quill.setSelection(quill.getText().length, quill.getText().length);
+	    this.props.quill.focus();
+	    var currentText = this.props.quill.getText();
+	    var insertAt = this.props.quill.getSelection().start;
+	    this.props.quill.insertText(insertAt, this.props.char);
+	    this.props.quill.focus();
+	    this.props.quill.setSelection(insertAt + 1, insertAt + 1);
 	  },
 	  render: function render() {
 	    return _react2.default.createElement(
@@ -29199,15 +29242,17 @@
 	    });
 	  },
 	  toolbarSpecialCharacters: function toolbarSpecialCharacters() {
-	    return ['é', 'à', 'è', 'î', 'ê', 'ô'];
+	    return ['é', 'è', 'ê', 'à', 'â', 'î', 'ô', 'û', 'œ', 'ç'];
 	  },
 	  renderSpecialCharacterToolset: function renderSpecialCharacterToolset() {
+	    var _this3 = this;
+
 	    return this.toolbarSpecialCharacters().map(function (char) {
-	      return _react2.default.createElement(SpecialChar, { char: char });
+	      return _react2.default.createElement(SpecialChar, { char: char, quill: _this3.state.quill });
 	    });
 	  },
 	  submitText: function submitText() {
-	    this.props.onSubmitText(this.state.quill.getText(), this.props.prompt.prompt);
+	    this.props.onSubmitText(this.state.quill.getText(), this.props.prompt, this.props.vocab.vocab);
 	  },
 	  translateText: function translateText() {
 	    this.props.translateText(this.state.quill.getText());
@@ -40233,7 +40278,6 @@
 	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 	  return {
 	    onChange: function onChange(vocabType, count) {
-	      console.log(vocabType + ' | ' + count);
 	      dispatch((0, _actions.setVocabCount)(vocabType, count));
 	    }
 	  };
@@ -40292,7 +40336,118 @@
 
 	var _reactRedux = __webpack_require__(234);
 
-	var _Prompt = __webpack_require__(270);
+	var _ProgressWrapper = __webpack_require__(270);
+
+	var _actions = __webpack_require__(256);
+
+	var mapStateToProps = function mapStateToProps(state) {
+	  return {
+	    allResponses: state.allResponses
+	  };
+	};
+
+	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+	  return {
+	    onLoad: function onLoad() {
+	      dispatch((0, _actions.fetchProgress)());
+	    }
+	  };
+	};
+
+	var ActiveProgressWrapper = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_ProgressWrapper.ProgressWrapper);
+
+	exports.default = ActiveProgressWrapper;
+
+/***/ },
+/* 270 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.ProgressWrapper = undefined;
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var ProgressWrapper = exports.ProgressWrapper = _react2.default.createClass({
+	  displayName: "ProgressWrapper",
+	  componentDidMount: function componentDidMount() {
+	    this.props.onLoad();
+	  },
+	  formatTimestamp: function formatTimestamp(datetime) {
+	    var dateInt = Date.parse(datetime);
+	    var date = new Date(dateInt);
+	    return date.toDateString() + " at " + date.toLocaleTimeString();
+	  },
+	  renderResponses: function renderResponses() {
+	    var _this = this;
+
+	    return this.props.allResponses.map(function (response) {
+	      return _react2.default.createElement(
+	        "div",
+	        { className: "response" },
+	        _react2.default.createElement(
+	          "label",
+	          { className: "response-label" },
+	          "Prompt"
+	        ),
+	        _react2.default.createElement(
+	          "div",
+	          { className: "response-date" },
+	          "CREATED: ",
+	          _this.formatTimestamp(response.created_at)
+	        ),
+	        _react2.default.createElement(
+	          "div",
+	          { className: "response-prompt" },
+	          response.prompt
+	        ),
+	        _react2.default.createElement(
+	          "div",
+	          { className: "response-vocab" },
+	          response.vocab
+	        ),
+	        _react2.default.createElement(
+	          "label",
+	          { className: "response-label" },
+	          "Response"
+	        ),
+	        _react2.default.createElement(
+	          "div",
+	          { className: "response-text" },
+	          response.text
+	        )
+	      );
+	    });
+	  },
+	  render: function render() {
+	    return _react2.default.createElement(
+	      "div",
+	      null,
+	      this.renderResponses()
+	    );
+	  }
+	});
+
+/***/ },
+/* 271 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _reactRedux = __webpack_require__(234);
+
+	var _Prompt = __webpack_require__(272);
 
 	var mapStateToProps = function mapStateToProps(state) {
 	  return {
@@ -40305,7 +40460,7 @@
 	exports.default = SelectPrompt;
 
 /***/ },
-/* 270 */
+/* 272 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -40333,16 +40488,16 @@
 	});
 
 /***/ },
-/* 271 */
+/* 273 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(272);
+	var content = __webpack_require__(274);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(274)(content, {});
+	var update = __webpack_require__(276)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -40359,21 +40514,21 @@
 	}
 
 /***/ },
-/* 272 */
+/* 274 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(273)();
+	exports = module.exports = __webpack_require__(275)();
 	// imports
 
 
 	// module
-	exports.push([module.id, "#container {\n  font-family: \"Trebuchet MS\", \"Times New Roman\";\n  max-width: 950px;\n  margin: 0 auto;\n  padding: 1em;\n  border: 1px solid gray;\n}\n\n#vocab-form {\n  max-width: 1000px;\n  margin: 0 auto;\n}\n\n.nav {\n  margin-bottom: 1em;\n}\n\n.nav-item {\n  color: green;\n  font-size: 1.5em;\n  font-weight: bold;\n  text-decoration: none;\n  padding: 0 1em;\n}\n\n.first {\n  padding-left: 0;\n}\n\n.practice-strategy {\n  display: inline-block;\n  padding: 0.5em;\n  cursor: pointer;\n}\n\n.practice-strategy.active {\n  background-color: yellow;\n  border: 1px solid gray;\n}\n\n.strategies {\n  border: 1px solid gray;\n  margin-bottom: 1em;\n  padding: 1em;\n}\n\n.strategy-prompts {\n  border-bottom: 1px dashed gray;\n  border-top: 1px dashed gray;\n  margin-top: 1em;\n  padding: 1em;\n  min-height: 2em;\n}\n\n.prompt-option {\n  line-height: 2em;\n  font-weight: bold;\n}\n\n.vocab-option {\n  display: inline;\n  margin-right: 1em;\n  font-size: 30px;\n  height: 16px;\n}\n\n.vocab-input {\n  width: 2em;\n  height: 30px;\n  line-height: 30px;\n  vertical-align: middle;\n  font-size: 22px;\n}\n\n.fetch-vocab {\n  border-left: 1px solid gray;\n  border-right: 1px solid gray;\n  float: right;\n  color: white;\n  background-color: green;\n  cursor: pointer;\n  margin-left: 0.5em;\n  padding: 0.5em;\n}\n\n.practice-area {\n  margin-top: 1em;\n  min-height: 30em;\n  position: relative;\n}\n\n.vocab-type {\n  border-bottom: 1px solid gray;\n  font-style: italic;\n  margin: 1em 0;\n}\n\n.vocab-section {\n  margin-right: 1em;\n}\n\n.vocab-list-container {\n  width: 25%;\n}\n\n.editor-wrapper {\n  border: 1px solid gray;\n  bottom: 0;\n  margin-top: 1em;\n  position: absolute;\n  right: 0;\n  top: 0;\n  width: 75%;\n}\n\n.display-word {\n  font-size: 1.3em;\n}\n\n.display-translation {\n  display: none;\n  font-size: 0.8em;\n  margin-left: 1em;\n}\n\n#toolbar {\n  padding-left: 1em;\n  border-bottom: 1px solid gray;\n\n}\n\n.practice-input {\n  font-size: 1em !important;\n  margin-left: 1em;\n  margin-top: 1em;\n  width: 100%;\n}\n\n.vocab-word {\n  cursor: pointer;\n}\n\n.vocab-word.active .display-translation {\n  display: block;\n}\n\n.hide {\n  display: none !important;\n}\n\n.editor-wrapper.no-vocab {\n  position: static;\n  max-height: 30em;\n  width: 100%;\n}\n\n/* Same styles as .fetch-vocab - TODO: Move to some sass mixin */\n.new-prompt-btn, .practice-area-action-btn {\n  border-left: 1px solid gray;\n  border-right: 1px solid gray;\n  float: right;\n  color: white;\n  background-color: green;\n  cursor: pointer;\n  margin-left: 0.5em;\n  padding: 0.5em;\n}\n\n.input-wrapper {\n  display: flex;\n  margin: 1em 0;\n}\n\n.text-input {\n  width: 50%;\n}\n\n.input-label {\n  width: 6em;\n}\n\n.char {\n  border: 1px solid gray;\n  cursor: pointer;\n  padding: 2px 6px;\n  margin: 0 4px;\n}\n\n.close-translation {\n  position: absolute;\n  top: 0;\n  right: 0;\n  cursor: pointer;\n  margin-top: 3px;\n}\n\n.translation-text {\n  display: none;\n  font-style: italic;\n}\n\n.visible {\n  display: block !important;\n}\n\n.translation-wrapper {\n  margin: 1em;\n  border-top: 1px dashed gray;\n  border-bottom: 1px dashed gray;\n  padding: 1em 0;\n  position: relative;\n}\n", ""]);
+	exports.push([module.id, "#container {\n  font-family: \"Trebuchet MS\", \"Times New Roman\";\n  max-width: 950px;\n  margin: 0 auto;\n  padding: 1em;\n  border: 1px solid gray;\n}\n\n#vocab-form {\n  max-width: 1000px;\n  margin: 0 auto;\n}\n\n.nav {\n  margin-bottom: 1em;\n}\n\n.nav-item {\n  color: green;\n  font-size: 1.5em;\n  font-weight: bold;\n  text-decoration: none;\n  padding: 0 1em;\n}\n\n.first {\n  padding-left: 0;\n}\n\n.practice-strategy {\n  display: inline-block;\n  padding: 0.5em;\n  cursor: pointer;\n}\n\n.practice-strategy.active {\n  background-color: yellow;\n  border: 1px solid gray;\n}\n\n.strategies {\n  border: 1px solid gray;\n  margin-bottom: 1em;\n  padding: 1em;\n}\n\n.strategy-prompts {\n  border-bottom: 1px dashed gray;\n  border-top: 1px dashed gray;\n  margin-top: 1em;\n  padding: 1em;\n  min-height: 2em;\n}\n\n.prompt-option {\n  line-height: 2em;\n  font-weight: bold;\n}\n\n.vocab-option {\n  display: inline;\n  margin-right: 1em;\n  font-size: 30px;\n  height: 16px;\n}\n\n.vocab-input {\n  width: 2em;\n  height: 30px;\n  line-height: 30px;\n  vertical-align: middle;\n  font-size: 22px;\n}\n\n.fetch-vocab {\n  border-left: 1px solid gray;\n  border-right: 1px solid gray;\n  float: right;\n  color: white;\n  background-color: green;\n  cursor: pointer;\n  margin-left: 0.5em;\n  padding: 0.5em;\n}\n\n.practice-area {\n  margin-top: 1em;\n  min-height: 30em;\n  position: relative;\n}\n\n.vocab-type {\n  border-bottom: 1px solid gray;\n  font-style: italic;\n  margin: 1em 0;\n}\n\n.vocab-section {\n  margin-right: 1em;\n}\n\n.vocab-list-container {\n  width: 25%;\n}\n\n.editor-wrapper {\n  border: 1px solid gray;\n  bottom: 0;\n  margin-top: 1em;\n  position: absolute;\n  right: 0;\n  top: 0;\n  width: 75%;\n}\n\n.display-word {\n  font-size: 1.3em;\n}\n\n.display-translation {\n  display: none;\n  font-size: 0.8em;\n  margin-left: 1em;\n}\n\n#toolbar {\n  padding-left: 1em;\n  border-bottom: 1px solid gray;\n\n}\n\n.practice-input {\n  font-size: 1em !important;\n  margin-left: 1em;\n  margin-top: 1em;\n  width: 100%;\n}\n\n.vocab-word {\n  cursor: pointer;\n}\n\n.vocab-word.active .display-translation {\n  display: block;\n}\n\n.hide {\n  display: none !important;\n}\n\n.editor-wrapper.no-vocab {\n  position: static;\n  max-height: 30em;\n  width: 100%;\n}\n\n/* Same styles as .fetch-vocab - TODO: Move to some sass mixin */\n.new-prompt-btn, .practice-area-action-btn {\n  border-left: 1px solid gray;\n  border-right: 1px solid gray;\n  float: right;\n  color: white;\n  background-color: green;\n  cursor: pointer;\n  margin-left: 0.5em;\n  padding: 0.5em;\n}\n\n.input-wrapper {\n  display: flex;\n  margin: 1em 0;\n}\n\n.text-input {\n  width: 50%;\n}\n\n.input-label {\n  width: 6em;\n}\n\n.char {\n  border: 1px solid gray;\n  cursor: pointer;\n  padding: 2px 6px;\n  margin: 0 4px;\n}\n\n.close-translation {\n  position: absolute;\n  top: 0;\n  right: 0;\n  cursor: pointer;\n  margin-top: 3px;\n}\n\n.translation-text {\n  display: none;\n  font-style: italic;\n}\n\n.visible {\n  display: block !important;\n}\n\n.translation-wrapper {\n  margin: 1em;\n  border-top: 1px dashed gray;\n  border-bottom: 1px dashed gray;\n  padding: 1em 0;\n  position: relative;\n}\n\n.response {\n  border: 1px solid gray;\n  margin-bottom: 1em;\n  padding: 1em;\n  position: relative;\n}\n\n.response-label {\n  font-style: italic;\n  display: block;\n  border-bottom: 1px solid gray;\n}\n\n.response-prompt {\n  margin-bottom: 1em;\n}\n\n.response-date {\n  position: absolute;\n  font-style: italic;\n  top: 1em;\n  right: 1em;\n}\n", ""]);
 
 	// exports
 
 
 /***/ },
-/* 273 */
+/* 275 */
 /***/ function(module, exports) {
 
 	/*
@@ -40429,7 +40584,7 @@
 
 
 /***/ },
-/* 274 */
+/* 276 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*

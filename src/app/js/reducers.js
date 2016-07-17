@@ -7,6 +7,7 @@ import {
   FETCH_PROMPT_SUCCESS,
   SET_TRANSLATED_TEXT,
   TOGGLE_TRANSLATION_DISPLAY,
+  FETCH_PROGRESS_SUCCESS,
   fetchVocab
 } from './actions';
 import { createStore, combineReducers, applyMiddleware } from 'redux';
@@ -170,6 +171,15 @@ export function showTranslation(state = initialTranslationDisplayState, action) 
   }
 }
 
+export function allResponses(state = [], action) {
+  switch (action.type) {
+    case FETCH_PROGRESS_SUCCESS:
+      return action.responses;
+    default:
+      return state;
+  }
+}
+
 const reducers = combineReducers({
   activeStrategy,
   verbCount,
@@ -181,7 +191,8 @@ const reducers = combineReducers({
   prompt,
   showTranslation,
   translation,
-  isPlainPrompt
+  isPlainPrompt,
+  allResponses
 });
 
 export const store = createStore(

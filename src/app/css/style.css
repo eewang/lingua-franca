@@ -210,3 +210,27 @@
   padding: 1em 0;
   position: relative;
 }
+
+.response {
+  border: 1px solid gray;
+  margin-bottom: 1em;
+  padding: 1em;
+  position: relative;
+}
+
+.response-label {
+  font-style: italic;
+  display: block;
+  border-bottom: 1px solid gray;
+}
+
+.response-prompt {
+  margin-bottom: 1em;
+}
+
+.response-date {
+  position: absolute;
+  font-style: italic;
+  top: 1em;
+  right: 1em;
+}

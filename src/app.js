@@ -148,7 +148,7 @@ app.get('/api/random_prompt', (req, res) => {
 });
 
 app.get('/api/progress', (req, res) => {
-  PromptResponse.find({}).exec((err, objs) => {
+  PromptResponse.find({}).sort({created_at: -1}).exec((err, objs) => {
     res.json(objs);
   })
 });
@@ -207,7 +207,7 @@ app.post('/api/response', (req, res) => {
   var responsePrompt = new PromptResponse({
     text: req.query.text,
     prompt: req.query.prompt,
-    vocab: req.query.vocab
+    vocab: req.body.vocab
   });
   responsePrompt.save((err) => {
     if (err) {

@@ -30,10 +30,17 @@ const PromptSchema = new Schema({
   lang: String
 })
 
+const VocabSchema = new Schema({
+  adjectives: [AdjectiveSchema],
+  adverbs: [AdverbSchema],
+  nouns: [NounSchema],
+  verb: [VerbSchema],
+})
+
 const PromptResponseSchema = new Schema({
   text: String,
   prompt: String,
-  vocab: [String],
+  vocab: [VocabSchema],
 }, {
   timestamps: {
     createdAt: 'created_at',

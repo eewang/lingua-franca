@@ -5,11 +5,12 @@ import { VocabWord } from './VocabWord';
 
 const SpecialChar = React.createClass({
   onClick() {
-    var quill = new Quill('.quill-editor');
-    var currentText = quill.getText();
-    quill.setText(currentText.trim() + this.props.char + '\n');
-    quill.focus();
-    quill.setSelection(quill.getText().length, quill.getText().length);
+    this.props.quill.focus()
+    var currentText = this.props.quill.getText();
+    var insertAt = this.props.quill.getSelection().start;
+    this.props.quill.insertText(insertAt, this.props.char)
+    this.props.quill.focus();
+    this.props.quill.setSelection(insertAt + 1, insertAt + 1);
   },
 
   render() {
@@ -105,17 +106,17 @@ export const PracticeArea = React.createClass({
   },
 
   toolbarSpecialCharacters() {
-    return ['é', 'à', 'è', 'î', 'ê', 'ô'];
+    return ['é', 'è', 'ê', 'à', 'â',  'î', 'ô', 'û', 'œ', 'ç'];
   },
 
   renderSpecialCharacterToolset() {
     return this.toolbarSpecialCharacters().map((char) => {
-      return <SpecialChar char={char}/>
+      return <SpecialChar char={char} quill={this.state.quill}/>
     });
   },
 
   submitText() {
-    this.props.onSubmitText(this.state.quill.getText(), this.props.prompt.prompt);
+    this.props.onSubmitText(this.state.quill.getText(), this.props.prompt, this.props.vocab.vocab);
   },
 
   translateText() {

@@ -18,8 +18,8 @@ const mapDispatchToProps = (dispatch) => {
     onChange: () => {
       return null;
     },
-    onSubmitText: (text, prompt) => {
-      dispatch(postResponse(text, prompt));
+    onSubmitText: (text, prompt, vocab) => {
+      dispatch(postResponse(text, prompt, vocab));
     },
     translateText: (text) => {
       dispatch(translateText(text));
