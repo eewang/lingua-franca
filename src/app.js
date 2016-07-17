@@ -15,6 +15,7 @@ import parse from 'csv-parse';
 import fs from 'fs';
 import iconv from 'iconv-lite';
 import https from 'https';
+import { SeedPrompts } from './data/prompts';
 
 mongoose.connect('mongodb://localhost/lingua-franca');
 
@@ -127,6 +128,27 @@ app.get('/api/translate', (req, res) => {
     });
   });
 });
+
+app.post('/api/create_prompt', (req, res) => {
+  // TODO: Super dangerous, but using for testing of bookmarklet
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'GET, POST');
+  res.header('Access-Control-Allow-HEADERS', 'Content-Type, Accept');
+
+  // TODO: Change the bookmarklet to handle body form params
+  var prompt = new Prompt({
+    type: 'translate',
+    prompt: req.query.prompt,
+    lang: 'english'
+  });
+  prompt.save((err) => {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log('success!');
+    }
+  });
+})
 
 app.post('/create_prompt', (req, res) => {
   var prompt = new Prompt({
@@ -253,7 +275,17 @@ app.get('/parse_data', (req, res) => {
     });
   }
 
-  Promise.all(allVocab()).then((results) => {
+  var prompts = () => {
+    return new Promise((resolve, reject) => {
+      SeedPrompts.forEach((p) => {
+        var prompt = new Prompt(p);
+        prompt.save();
+      });
+      resolve();
+    });
+  }
+
+  Promise.all(allVocab(), prompts()).then((results) => {
     res.redirect('/');
   }).catch((err) => {
     console.log('womp', err);
