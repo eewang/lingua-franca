@@ -40,47 +40,54 @@ var shuffleArray = (array) => {
   return array;
 };
 
-var parseNouns = parse({delimiter: ','}, (err, data) => {
-  data.forEach((word) => {
-    var noun = new Noun({
-      word: word[0].trim(),
-      gender: word[1],
-      translation: word[2].trim()
+var parseNouns = () => {
+  return parse({delimiter: ','}, (err, data) => {
+    data.forEach((word) => {
+      var noun = new Noun({
+        word: word[0].trim(),
+        gender: word[1],
+        translation: word[2].trim()
+      });
+      noun.save();
     });
-    noun.save();
   });
-});
+};
 
-var parseVerbs = parse({delimiter: ','}, (err, data) => {
-  data.forEach((word) => {
-    var verb = new Verb({
-      word: word[0].trim(),
-      translation: word[1].trim()
+var parseVerbs = () => {
+  return parse({delimiter: ','}, (err, data) => {
+    data.forEach((word) => {
+      var verb = new Verb({
+        word: word[0].trim(),
+        translation: word[1].trim()
+      });
+      verb.save();
     });
-    verb.save();
   });
-});
+};
 
-var parseAdverbs = parse({delimiter: ','}, (err, data) => {
-  data.forEach((word) => {
-    var adverb = new Adverb({
-      word: word[0].trim(),
-      translation: word[1].trim()
-    });
-    adverb.save();
-  })
-});
+var parseAdverbs = () => {
+  return parse({delimiter: ','}, (err, data) => {
+    data.forEach((word) => {
+      var adverb = new Adverb({
+        word: word[0].trim(),
+        translation: word[1].trim()
+      });
+      adverb.save();
+    })
+  });
+};
 
-var parseAdjectives = parse({delimiter: ','}, (err, data) => {
-  data.forEach((word) => {
-    console.log(word);
-    var adverb = new Adjective({
-      word: word[0].trim(),
-      translation: word[1].trim()
-    });
-    adverb.save();
-  })
-});
+var parseAdjectives = () => {
+  return parse({delimiter: ','}, (err, data) => {
+    data.forEach((word) => {
+      var adverb = new Adjective({
+        word: word[0].trim(),
+        translation: word[1].trim()
+      });
+      adverb.save();
+    })
+  });
+};
 
 var fetchRandom = (req, res, model) => {
   var count = req.query.count || 5;
@@ -220,14 +227,38 @@ app.post('/api/response', (req, res) => {
 })
 
 app.get('/parse_data', (req, res) => {
-  Noun.collection.remove();
-  Verb.collection.remove();
-  Adverb.collection.remove();
-  Adjective.collection.remove();
-  fs.createReadStream(__dirname + '/data/nouns.csv', {encoding: 'utf8'}).pipe(parseNouns);
-  fs.createReadStream(__dirname + '/data/verbs.csv', {encoding: 'utf8'}).pipe(parseVerbs);
-  fs.createReadStream(__dirname + '/data/adverbs.csv', {encoding: 'utf8'}).pipe(parseAdverbs);
-  fs.createReadStream(__dirname + '/data/adjectives.csv', {encoding: 'utf8'}).pipe(parseAdjectives);
+  var readStreams = [
+    {file: '/data/nouns.csv', action: parseNouns(), model: Noun},
+    {file: '/data/verbs.csv', action: parseVerbs(), model: Verb},
+    {file: '/data/adverbs.csv', action: parseAdverbs(), model: Adverb},
+    {file: '/data/adjectives.csv', action: parseAdjectives(), model: Adjective},
+  ];
+
+  var vocabStream = (file, action, model) => {
+    return new Promise((resolve, reject) => {
+      // First, delete all existing data;
+      model.remove(() => {
+
+        // Then, upload data from csv files
+        var stream = fs.createReadStream(__dirname + file, {encoding: 'utf8'}).pipe(action);
+
+        stream.on('end', resolve);
+      });
+    });
+  }
+
+  var allVocab = () => {
+    return readStreams.map((streamObj) => {
+      vocabStream(streamObj.file, streamObj.action, streamObj.model);
+    });
+  }
+
+  Promise.all(allVocab()).then((results) => {
+    res.redirect('/');
+  }).catch((err) => {
+    console.log('womp', err);
+  })
+
 });
 
 app.get('/api/verbs', (req, res) => {
