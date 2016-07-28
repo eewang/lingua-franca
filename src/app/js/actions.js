@@ -105,9 +105,9 @@ export function postResponseSuccess() {
   }
 }
 
-export function postResponse(text, prompt, vocab) {
+export function postResponse(text, promptId, vocab) {
   return function (dispatch) {
-    return fetch('api/response?text=' + text + '&prompt=' + prompt, {
+    return fetch('api/response?text=' + text + '&promptId=' + promptId, {
       method: 'post',
       body: JSON.stringify(vocab),
       headers: new Headers({

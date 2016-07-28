@@ -155,9 +155,11 @@ app.get('/api/random_prompt', (req, res) => {
 });
 
 app.get('/api/progress', (req, res) => {
-  PromptResponse.find({}).sort({created_at: -1}).exec((err, objs) => {
-    res.json(objs);
-  })
+  PromptResponse.findAll({
+    order: 'createdAt DESC'
+  }).then((results) => {
+    res.json(results);
+  });
 });
 
 app.post('/create_vocab', (req, res) => {
@@ -185,19 +187,13 @@ app.get('/', (req, res) => {
 });
 
 app.post('/api/response', (req, res) => {
-  var responsePrompt = new PromptResponse({
+  PromptResponse.create({
     text: req.query.text,
-    prompt: req.query.prompt,
+    promptId: req.query.promptId,
     vocab: req.body.vocab
+  }).then(() => {
+    res.json({success: true})
   });
-  responsePrompt.save((err) => {
-    if (err) {
-      console.log(err);
-    } else {
-      console.log('success');
-    }
-  });
-  res.json({success: true})
 })
 
 app.get('/parse_data', (req, res) => {

@@ -7,6 +7,7 @@ const mapStateToProps = (state, ownProps) => {
     vocab: state.vocab,
     lang: state.lang,
     prompt: state.prompt.prompt,
+    promptId: state.prompt.id,
     translation: state.translation,
     showTranslation: state.showTranslation,
     isPlainPrompt: state.isPlainPrompt
@@ -18,8 +19,8 @@ const mapDispatchToProps = (dispatch) => {
     onChange: () => {
       return null;
     },
-    onSubmitText: (text, prompt, vocab) => {
-      dispatch(postResponse(text, prompt, vocab));
+    onSubmitText: (text, promptId, vocab) => {
+      dispatch(postResponse(text, promptId, vocab));
     },
     translateText: (text) => {
       dispatch(translateText(text));

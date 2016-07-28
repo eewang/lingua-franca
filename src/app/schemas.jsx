@@ -36,9 +36,12 @@ export const Prompt = sequelize.define('prompt', {
 });
 
 export const PromptResponse = sequelize.define('prompt_response', {
-  text: Sequelize.STRING
+  text: Sequelize.STRING,
 });
 
+Prompt.hasMany(PromptResponse);
 PromptResponse.belongsTo(Prompt);
+// TODO: Add many-to-many relationship between prompt response and vocab
+// PromptResponse.hasMany(Vocab);
 
 sequelize.sync();

@@ -116,7 +116,7 @@ export const PracticeArea = React.createClass({
   },
 
   submitText() {
-    this.props.onSubmitText(this.state.quill.getText(), this.props.prompt, this.props.vocab.vocab);
+    this.props.onSubmitText(this.state.quill.getText(), this.props.promptId, this.props.vocab.vocab);
   },
 
   translateText() {
