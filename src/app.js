@@ -2,12 +2,12 @@ import express from 'express';
 import { render } from 'react-dom';
 // For logging form params
 import bodyParser from 'body-parser';
-import mongoose from 'mongoose';
 import {
-  Noun,
-  Verb,
-  Adverb,
-  Adjective,
+  // Noun,
+  // Verb,
+  // Adverb,
+  // Adjective,
+  Vocab,
   Prompt,
   PromptResponse }
 from './app/schemas.jsx';
@@ -16,8 +16,7 @@ import fs from 'fs';
 import iconv from 'iconv-lite';
 import https from 'https';
 import { SeedPrompts } from './data/prompts';
-
-mongoose.connect('mongodb://localhost/lingua-franca');
+import Sequelize from 'sequelize';
 
 const app = express();
 app.set('view engine', 'ejs');
@@ -41,64 +40,38 @@ var shuffleArray = (array) => {
   return array;
 };
 
-var parseNouns = () => {
+var parseVocab = (language) => {
   return parse({delimiter: ','}, (err, data) => {
     data.forEach((word) => {
-      var noun = new Noun({
+      // TODO: Condense these into a single handler; use findOrCreate func
+      Vocab.create({
         word: word[0].trim(),
-        gender: word[1],
-        translation: word[2].trim()
+        english: word[1].trim(),
+        type: word[2].trim(),
+        gender: word[3].trim(),
+        language: language,
       });
-      noun.save();
     });
-  });
-};
-
-var parseVerbs = () => {
-  return parse({delimiter: ','}, (err, data) => {
-    data.forEach((word) => {
-      var verb = new Verb({
-        word: word[0].trim(),
-        translation: word[1].trim()
-      });
-      verb.save();
-    });
-  });
-};
-
-var parseAdverbs = () => {
-  return parse({delimiter: ','}, (err, data) => {
-    data.forEach((word) => {
-      var adverb = new Adverb({
-        word: word[0].trim(),
-        translation: word[1].trim()
-      });
-      adverb.save();
-    })
-  });
-};
-
-var parseAdjectives = () => {
-  return parse({delimiter: ','}, (err, data) => {
-    data.forEach((word) => {
-      var adverb = new Adjective({
-        word: word[0].trim(),
-        translation: word[1].trim()
-      });
-      adverb.save();
-    })
   });
 };
 
 var fetchRandom = (req, res, model) => {
   var count = req.query.count || 5;
 
-  model.find({}, '_id', (err, ids) => {
-    var randomIds = shuffleArray(ids).slice(0, count);
-
-    model.where('_id').in(randomIds).exec((err, words) => {
-      res.json(words);
+  model.findAll({
+    attributes: ['id'],
+  }).then((instances) => {
+    return instances.map((inst) => { return inst.id; });
+  }).then((ids) => {
+    return shuffleArray(ids).slice(0, count);
+  }).then((idSet) => {
+    return model.findAll({
+      where: {
+        id: idSet
+      }
     });
+  }).then((models) => {
+    res.json(models);
   });
 }
 
@@ -136,43 +109,40 @@ app.post('/api/create_prompt', (req, res) => {
   res.header('Access-Control-Allow-HEADERS', 'Content-Type, Accept');
 
   // TODO: Change the bookmarklet to handle body form params
-  var prompt = new Prompt({
+  Prompt.create({
     type: 'translate',
     prompt: req.query.prompt,
     lang: 'english'
   });
-  prompt.save((err) => {
-    if (err) {
-      console.log(err);
-    } else {
-      console.log('success!');
-    }
-  });
-})
+});
 
 app.post('/create_prompt', (req, res) => {
-  var prompt = new Prompt({
+  Prompt.create({
     type: req.body.type,
     prompt: req.body.prompt,
     lang: req.body.lang
-  });
-  prompt.save((err) => {
-    if (err) {
-      console.log(err);
-    } else {
-      console.log('success!');
-    }
   });
   res.redirect('/admin');
 });
 
 app.get('/api/random_prompt', (req, res) => {
-  Prompt.find({}, '_id').where('type').in([req.query.type]).exec((err, ids) => {
-    var randomIds = shuffleArray(ids).slice(0, 1);
-    Prompt.findOne().where('_id').in(randomIds).exec((err, prompt) => {
-      if (!prompt) prompt = {type: 'question', prompt: ''}
-      res.json(prompt);
-    })
+
+  var promptIds = Prompt.findAll({
+    attributes: ['id'],
+    where: {
+      type: req.query.type
+    }
+  }).then((ids) => {
+    return ids.map((prompt) => { return prompt.id; });
+  }).then((ids) => {
+    return Prompt.find({
+      where: {
+        id: shuffleArray(ids).slice(0, 1)
+      }
+    });
+  }).then((prompt) => {
+    if (!prompt) prompt = {type: 'question', prompt: ''}
+    res.json(prompt);
   });
 });
 
@@ -250,42 +220,33 @@ app.post('/api/response', (req, res) => {
 
 app.get('/parse_data', (req, res) => {
   var readStreams = [
-    {file: '/data/nouns.csv', action: parseNouns(), model: Noun},
-    {file: '/data/verbs.csv', action: parseVerbs(), model: Verb},
-    {file: '/data/adverbs.csv', action: parseAdverbs(), model: Adverb},
-    {file: '/data/adjectives.csv', action: parseAdjectives(), model: Adjective},
+    {file: '/data/french.csv', action: parseVocab('french')},
   ];
-
-  var vocabStream = (file, action, model) => {
+  var vocabStream = (file, action) => {
     return new Promise((resolve, reject) => {
-      // First, delete all existing data;
-      model.remove(() => {
-
-        // Then, upload data from csv files
-        var stream = fs.createReadStream(__dirname + file, {encoding: 'utf8'}).pipe(action);
-
-        stream.on('end', resolve);
-      });
+      // Then, upload data from csv files
+      var stream = fs.createReadStream(__dirname + file, {encoding: 'utf8'}).pipe(action);
+      stream.on('end', resolve);
     });
   }
 
   var allVocab = () => {
     return readStreams.map((streamObj) => {
-      vocabStream(streamObj.file, streamObj.action, streamObj.model);
+      vocabStream(streamObj.file, streamObj.action);
     });
   }
 
   var prompts = () => {
     return new Promise((resolve, reject) => {
       SeedPrompts.forEach((p) => {
-        var prompt = new Prompt(p);
-        prompt.save();
+        Prompt.create(p);
       });
       resolve();
     });
   }
 
   Promise.all(allVocab(), prompts()).then((results) => {
+    console.log(results);
     res.redirect('/');
   }).catch((err) => {
     console.log('womp', err);

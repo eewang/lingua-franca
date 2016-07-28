@@ -1,56 +1,44 @@
-import mongoose from 'mongoose';
+import Sequelize from 'sequelize';
 import random from 'mongoose-simple-random';
 
-const Schema = mongoose.Schema;
-
-const NounSchema = new Schema({
-  word: String,
-  gender: String,
-  translation: String
+var sequelize = new Sequelize('lingua-franca', 'lingua-franca', 'silvousplait', {
+  host: 'localhost',
+  dialect: 'sqlite',
+  pool: {
+    max: 5,
+    min: 0,
+    idle: 10000
+  },
+  storage: './lingua-franca.sqlite'
 });
 
-const VerbSchema = new Schema({
-  word: String,
-  translation: String
-});
+sequelize
+  .authenticate()
+  .then((err) => {
+    console.log('Connection has started to sqlite');
+  })
+  .catch((err) => {
+    cnosole.log('Unable to connect to db: ', err);
+  });
 
-const AdverbSchema = new Schema({
-  word: String,
-  translation: String
-});
-
-const AdjectiveSchema = new Schema({
-  word: String,
-  translation: String
-});
-
-const PromptSchema = new Schema({
-  type: String,
-  prompt: String,
-  lang: String
+export const Vocab = sequelize.define('vocab', {
+  word: Sequelize.STRING,
+  type: Sequelize.STRING,
+  gender: Sequelize.STRING,
+  language: Sequelize.STRING,
+  english: Sequelize.STRING
 })
 
-const VocabSchema = new Schema({
-  adjectives: [AdjectiveSchema],
-  adverbs: [AdverbSchema],
-  nouns: [NounSchema],
-  verb: [VerbSchema],
-})
-
-const PromptResponseSchema = new Schema({
-  text: String,
-  prompt: String,
-  vocab: [VocabSchema],
-}, {
-  timestamps: {
-    createdAt: 'created_at',
-    updatedAt: 'updated_at'
-  }
+export const Prompt = sequelize.define('prompt', {
+  type: Sequelize.STRING,
+  prompt: Sequelize.STRING,
+  lang: Sequelize.STRING
 });
 
-export const Noun = mongoose.model('Noun', NounSchema);
-export const Verb = mongoose.model('Verb', VerbSchema);
-export const Adverb = mongoose.model('Adverb', AdverbSchema);
-export const Adjective = mongoose.model('Adjective', AdjectiveSchema);
-export const Prompt = mongoose.model('Prompt', PromptSchema);
-export const PromptResponse = mongoose.model('PromptResponse', PromptResponseSchema);
+export const PromptResponse = sequelize.define('prompt_response', {
+  text: Sequelize.STRING
+});
+
+PromptResponse.belongsTo(Prompt);
+
+sequelize.sync();
