@@ -7,10 +7,10 @@ import { fetchVocab } from '../actions';
 
 const FetchVocabBtn = React.createClass({
   onClick() {
-    store.dispatch(fetchVocab('verbs', store.getState().verbCount));
-    store.dispatch(fetchVocab('nouns', store.getState().nounCount));
-    store.dispatch(fetchVocab('adverbs', store.getState().adverbCount));
-    store.dispatch(fetchVocab('adjectives', store.getState().adjectiveCount));
+    store.dispatch(fetchVocab('verb', store.getState().verbCount));
+    store.dispatch(fetchVocab('noun', store.getState().nounCount));
+    store.dispatch(fetchVocab('adverb', store.getState().adverbCount));
+    store.dispatch(fetchVocab('adjective', store.getState().adjectiveCount));
     store.dispatch(setLanguage(this.props.lang));
   },
 

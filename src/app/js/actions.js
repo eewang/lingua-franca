@@ -151,7 +151,7 @@ export function fetchVocab(vocabType, vocabTypeCount) {
   return function (dispatch) {
     dispatch(requestVocab());
 
-    return fetch('api/' + vocabType + '?count=' + vocabTypeCount).then((resp) => {
+    return fetch('api/vocab?type='+ vocabType + '&count=' + vocabTypeCount).then((resp) => {
       return resp.json();
     }).then((json) => {
       dispatch(fetchVocabSuccess(vocabType, json));

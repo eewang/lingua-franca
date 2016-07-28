@@ -107,7 +107,7 @@ const VocabForm = React.createClass({
           </div>
           <div className="input-wrapper">
             <label className="input-label">Translation:</label>
-            <input type="text" name="translation" className="text-input"></input>
+            <input type="text" name="english" className="text-input"></input>
           </div>
           <div className="input-wrapper">
             <label className="input-label">Type:</label>
@@ -115,6 +115,14 @@ const VocabForm = React.createClass({
               <option value="verb">Verb</option>
               <option value="noun">Noun</option>
               <option value="adverb">Adverb</option>
+              <option value="adjective">Adjective</option>
+            </select>
+          </div>
+          <div className="input-wrapper">
+            <label className="input-label">Language:</label>
+            <select name="language">
+              <option value="french">French</option>
+              <option value="spanish">Spanish</option>
             </select>
           </div>
           <button type="submit">Submit</button>

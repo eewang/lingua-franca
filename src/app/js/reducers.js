@@ -87,19 +87,19 @@ export function adjectiveCount(state = 0, action) {
 function parseVocabTypes(vocabState, action) {
   console.log(action);
   switch (action.vocabType) {
-    case 'verbs':
+    case 'verb':
       return Object.assign({}, vocabState, {
         verbs: action.vocab
       });
-    case 'nouns':
+    case 'noun':
       return Object.assign({}, vocabState, {
         nouns: action.vocab
       });
-    case 'adverbs':
+    case 'adverb':
       return Object.assign({}, vocabState, {
         adverbs: action.vocab
       });
-    case 'adjectives':
+    case 'adjective':
       return Object.assign({}, vocabState, {
         adjectives: action.vocab
       });

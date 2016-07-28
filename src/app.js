@@ -3,10 +3,6 @@ import { render } from 'react-dom';
 // For logging form params
 import bodyParser from 'body-parser';
 import {
-  // Noun,
-  // Verb,
-  // Adverb,
-  // Adjective,
   Vocab,
   Prompt,
   PromptResponse }
@@ -43,29 +39,41 @@ var shuffleArray = (array) => {
 var parseVocab = (language) => {
   return parse({delimiter: ','}, (err, data) => {
     data.forEach((word) => {
-      // TODO: Condense these into a single handler; use findOrCreate func
-      Vocab.create({
-        word: word[0].trim(),
-        english: word[1].trim(),
-        type: word[2].trim(),
-        gender: word[3].trim(),
-        language: language,
+      Vocab.findOne({
+        where: {
+          word: word[0].trim()
+        }
+      }).then((vocab) => {
+        // TODO: update existing entry if it exists
+        if (!vocab) {
+          Vocab.create({
+            word: word[0].trim(),
+            english: word[1].trim(),
+            type: word[2].trim(),
+            gender: word[3].trim(),
+            language: language,
+          });
+        }
       });
     });
   });
 };
 
-var fetchRandom = (req, res, model) => {
+var fetchRandom = (req, res) => {
   var count = req.query.count || 5;
+  var type = req.query.type;
 
-  model.findAll({
+  Vocab.findAll({
     attributes: ['id'],
+    where: {
+      type: type
+    }
   }).then((instances) => {
     return instances.map((inst) => { return inst.id; });
   }).then((ids) => {
     return shuffleArray(ids).slice(0, count);
   }).then((idSet) => {
-    return model.findAll({
+    return Vocab.findAll({
       where: {
         id: idSet
       }
@@ -153,49 +161,23 @@ app.get('/api/progress', (req, res) => {
 });
 
 app.post('/create_vocab', (req, res) => {
-  var model, data;
-  console.log(req.body.type);
-  switch (req.body.type) {
-    case 'noun':
-      var word = new Noun({
+  Vocab.findOne({
+    where: {
+      word: req.body.word
+    }
+  }).then((vocab) => {
+    if (!vocab) {
+      Vocab.create({
         word: req.body.word,
+        english: req.body.english,
+        type: req.body.type,
         gender: req.body.gender,
-        translation: req.body.translation,
+        language: req.body.language,
       });
-      word.save(function(err) {
-        if (err) {
-          console.log(err);
-        } else {
-          console.log('success!');
-        }
-      })
-    case 'verb':
-      var word = new Verb({
-        word: req.body.word,
-        translation: req.body.translation,
-      });
-      word.save(function(err) {
-        if (err) {
-          console.log(err);
-        } else {
-          console.log('success!');
-        }
-      });
-    case 'adverb':
-      var word = new Adverb({
-        word: req.body.word,
-        translation: req.body.translation,
-      });
-      word.save(function(err) {
-        if (err) {
-          console.log(err);
-        } else {
-          console.log('success!');
-        }
-      });
+    }
+  }).then(() => {
     res.redirect('/admin');
-  }
-
+  });
 });
 
 app.get('/', (req, res) => {
@@ -254,20 +236,8 @@ app.get('/parse_data', (req, res) => {
 
 });
 
-app.get('/api/verbs', (req, res) => {
-  fetchRandom(req, res, Verb);
-});
-
-app.get('/api/nouns', (req, res) => {
-  fetchRandom(req, res, Noun);
-});
-
-app.get('/api/adverbs', (req, res) => {
-  fetchRandom(req, res, Adverb);
-});
-
-app.get('/api/adjectives', (req, res) => {
-  fetchRandom(req, res, Adjective);
+app.get('/api/vocab', (req, res) => {
+  fetchRandom(req, res);
 });
 
 app.get('*', (req, res) => {

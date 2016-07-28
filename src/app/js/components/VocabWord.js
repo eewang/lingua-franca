@@ -18,13 +18,14 @@ export const VocabWord = React.createClass({
     if (this.props.lang === 'french') {
       return this.props.word.word;
     } else {
-      return this.props.word.translation;
+      // TODO: make this language neutral, so its only from-lang, to-lang
+      return this.props.word.english;
     }
   },
 
   displayTranslation() {
     if (this.props.lang === 'french') {
-      return this.props.word.translation;
+      return this.props.word.english;
     } else {
       return this.props.word.word;
     }
