@@ -9,6 +9,8 @@ import ActivePracticeArea from './js/containers/ActivePracticeArea';
 import ActiveVocabArea from './js/containers/ActiveVocabArea';
 import ActiveProgressWrapper from './js/containers/ActiveProgressWrapper';
 import SelectPrompt from './js/containers/SelectPrompt';
+import ActiveTagArea from './js/containers/ActiveTagArea';
+import ActiveQuizletWrapper from './js/containers/ActiveQuizletWrapper';
 import { setLanguage, fetchPrompt, fetchProgress } from './js/actions';
 
 require('./css/style.css');
@@ -78,11 +80,15 @@ const PromptForm = React.createClass({
             <select name="lang">
               <option value="french">Francais</option>
               <option value="english">English</option>
+              <option value="spanish">Espanol</option>
             </select>
           </div>
           <div className="input-wrapper">
             <label className="input-label">Prompt:</label>
             <input type="text" name="prompt" className="text-input"></input>
+          </div>
+          <div>
+            <ActiveTagArea/>
           </div>
           <button type="submit">Submit</button>
         </form>
@@ -154,10 +160,11 @@ const NavItem = React.createClass({
 const NavBar = React.createClass({
   navItems() {
     return [
-      {path: '/',         label: 'home'},
-      {path: '/admin',    label: 'admin'},
-      {path: '/practice', label: 'practice'},
-      {path: '/progress', label: 'progress'}
+      {path: '/',         label: 'Home'},
+      {path: '/admin',    label: 'Admin'},
+      {path: '/practice', label: 'Practice'},
+      {path: '/progress', label: 'Progress'},
+      {path: '/quizlet',  label: 'Quizlet'},
     ];
   },
 
@@ -255,6 +262,7 @@ render((
       <Route path="/admin" component={AdminWrapper}/>
       <Route path="/practice" component={PracticeWrapper}/>
       <Route path="/progress" component={ActiveProgressWrapper}/>
+      <Route path="/quizlet" component={ActiveQuizletWrapper}/>
     </Route>
   </Router>
 ), document.getElementById('container'));

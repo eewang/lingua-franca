@@ -1,0 +1,6 @@
+src/.DS_Store
+node_modules/
+src/data/.DS_Store
+.DS_Store
+*.sqlite
+src/public/bundle.js

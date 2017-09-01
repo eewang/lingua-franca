@@ -234,3 +234,34 @@
   top: 1em;
   right: 1em;
 }
+
+.tag {
+  border: 1px solid black;
+  color: white;
+  display: inline-block;
+  margin-bottom: 1em;
+  margin-right: 1em;
+  padding: 0.5em;
+  cursor: pointer;
+}
+
+.blue {
+  background-color: blue;
+}
+
+.red {
+  background-color: red;
+}
+
+.green {
+  background-color: green;
+}
+
+.black {
+  background-color: black;
+}
+
+.active {
+  background-color: yellow;
+  color: black;
+}

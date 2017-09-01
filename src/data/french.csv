@@ -1,3 +1,56 @@
+,,,
+avancer,"to advance, to make progress",verb,
+renforcer,"to reinforce, to strengthen",verb,
+résoudre,"to resolve, to solve",verb,
+maintenir,"to maintain, to keep, to hol",verb,
+tarif,"price, fare",noun,m
+soutenir,"to support, to help",verb,
+effectivement,"effectively, actually",adverb,
+futé,"clever, smart",adjective,
+reprise,"recovery, regrowth",noun,f
+fournir,"to furnish, to provide",verb,
+élaboration,"development, elaboration",noun,f
+favoriser,"to promote, to boost",verb,
+établir,"to establish, to set up",verb,
+dégager,"to clear off, to free",verb,
+mince,"thin, slim",adjective,
+programmer,"to program, to schedule",verb,
+reculer,"to go back, to move back, to step back",verb,
+sûreté,"safety, security",noun,f
+risquer,to risk,verb,
+inquiétude,"worry, anxiety, fear",noun,f
+néanmoins,"nevertheless, however",adverb,
+misérable,"miserable, pitiful",adjective,
+détention,"detention, incarceration",noun,f
+cérébrale,"cerebral, brain",adjective,
+déchirer,"to tear up, to tear apart",verb,
+profiter,to make the most of,verb,
+dommage,damage,noun,m
+complot,"plot, scheme, conspiracy",noun,m
+gaffe,"blunder, faux pas",noun,f
+se rappeler,"to recall, to remember",verb,
+fiable,reliable,adjective,
+ravissante,"ravishing, delightful",adjective,
+ancêtre,ancestor,noun,
+éternelle,eternal,adjective,
+attacher,"to attach, to fasten",verb,
+insertion,integration,noun,f
+bataille,battle,noun,f
+foudre,lightning,noun,f
+déclencher,"to trigger, to set off",verb,
+investir,to invest,verb,
+intimité,"intimacy, privacy, cosiness",noun,f
+feuille,"piece of paper, sheet",noun,f
+faiblesse,weakness,noun,f
+mysterieux,mysterious,adjective,
+gorge,throat,noun,f
+bâtir,to build,verb,
+pelle,shovel,noun,f
+coque,"shell, hull",noun,f
+mouillée,wet,adjective,
+refaire,"to redo, to do again",verb,
+désagréable,"disagreeable, unpleasant",adjective,
+acquis,"knowledge, benefit, asset",noun,m
 fascinant,fascinating,adjective,
 pathétique,"moving, touching, pathetic",adjective,
 gras,"greasy, oily",adjective,
@@ -162,6 +215,7 @@ raisonnable,"reasonable, rational, sensible",adjective,
 reconnaissant,"grateful, appreciative",adjective,
 remarquable,remarkable,adjective,
 relatif,relative,adjective,
+religieux,religious,adjective,
 rempli,"filled, busy",adjective,
 tel,"such a, as, like",adjective,
 timide,"shy, timid",adjective,
@@ -196,26 +250,13 @@ vide,empty,adjective,
 vieux,old,adjective,
 vilain,"awful, ugly, nasty",adjective,
 vivant,"alive, lively",adjective,
-adorer,"to adore, to love",verb,
-livrer,to deliver,verb,
-enterrer,to bury,verb,
-prescrire,to prescribe,verb,
-ôter,"to remove, to take off (as in clothing)",verb,
-oser,to dare,verb,
-revendiquer,"to claim, to demand",verb,
-se contendire,to contradict,verb,
-interesser,to interest,verb,
-pousser,"to push, to grow",verb,
-gratter,"to scratch, to scrub",verb,
-libérer,"to release, to liberate, to free",verb,
-déchirér,"to tear up, to tear apart",verb,
-effectuer,"to make, to carry out, to effect",verb,
 abandonner,to abandon,verb,
 accéder,"to access, to reach",verb,
 accepter,"to accept, to agree to",verb,
 accompagner,"to accompany, to escort",verb,
 accueillir,"to welcome, to receive",verb,
 acheter,to buy,verb,
+adorer,"to adore, to love",verb,
 affronter,"to face, to confront",verb,
 aimer,to like,verb,
 ajouter,to add,verb,
@@ -288,11 +329,13 @@ couvrir,to cover,verb,
 craindre,"to fear, to be afraid of",verb,
 créer,to create,verb,
 creuser,to dig,verb,
+crier,"to scream, to shout",verb,
 critiquer,to criticize,verb,
 croire,"to believe, to think (ideas)",verb,
 cuire,"to cook, to bake",verb,
 danser,to dance,verb,
 débarrasser,to clear,verb,
+déchirér,"to tear up, to tear apart",verb,
 décider,to decide,verb,
 declarer,to declare,verb,
 décoller,"to take off, to unstick, to peel off",verb,
@@ -326,18 +369,21 @@ dormir,to sleep,verb,
 durer,to last,verb,
 éclairer,"to light, to illuminate",verb,
 écraser,"to crush, to mash",verb,
+effectuer,"to make, to carry out, to effect",verb,
 effrayer,"to frighten, to scare off",verb,
 élever,"to raise, to bring up, to erect",verb,
 embarquer,"to board, to embark",verb,
 embrasser,"to kiss, to embrace",verb,
 emmener,"to take, to lead",verb,
 empêcher,"to help oneself from, to prevent oneself",verb,
+empirer,"to get worse, to decline",verb,
 enfermer,"to lock up, to imprison",verb,
 engager,"to engage, to hire, to commit",verb,
 enlever,"to remove, take off",verb,
 enregistrer,"to register, to record",verb,
 enseigner,to teach,verb,
 entendre,to hear,verb,
+enterrer,to bury,verb,
 entourer,to surround,verb,
 entraîner,"to train, to coach, to lead",verb,
 entrer,to enter,verb,
@@ -373,6 +419,7 @@ garantir,"to guarantee, to assure",verb,
 garder,"to look after, to keep",verb,
 gérer,"to manage, to run",verb,
 glisser,"to slip, to slide",verb,
+gratter,"to scratch, to scrub",verb,
 guérir,"to cure, to heal",verb,
 habiter,"to reside, to live",verb,
 honerer,"to honor, to respect",verb,
@@ -384,6 +431,7 @@ inspirer,to inspire,verb,
 installer,"to install, to place, to establish",verb,
 intégrer,"to integrate, to include",verb,
 interdire,"to forbid, to prohibit",verb,
+interesser,to interest,verb,
 inviter,to invite,verb,
 isoler,"to isolate, to separate, to insulate",verb,
 jeter,"to throw, to toss, to cast",verb,
@@ -392,8 +440,10 @@ jurer,to swear,verb,
 lâcher,"to release, let go",verb,
 laisser,"to let, to allow",verb,
 lancer,"to throw, to start",verb,
+libérer,"to release, to liberate, to free",verb,
 lier,"to tie, to bind, to relate to",verb,
 lire,to read,verb,
+livrer,to deliver,verb,
 lutter,"to struggle, to fight",verb,
 maîtriser,"to master, to control",verb,
 manger,to eat,verb,
@@ -417,6 +467,8 @@ obéir,"to obey, to respond",verb,
 observer,to observe,verb,
 obtenir,"to obtain, to get",verb,
 organiser,to organize,verb,
+oser,to dare,verb,
+ôter,"to remove, to take off (as in clothing)",verb,
 oublier,to forget,verb,
 ouvrir,"to open, to unlock",verb,
 paraître,"to appear, to seem",verb,
@@ -433,12 +485,14 @@ poser,"to ask, to formulate, to lay in place",verb,
 possèder,"to have, to posess, to own",verb,
 pourrir,"to rot, to decay, to corrupt",verb,
 poursuivre,to pursue,verb,
+pousser,"to push, to grow",verb,
 pouvoir,"can, able to",verb,
 pratiquer,"to practice, to use",verb,
 précisément,precisely,verb,
 préférer,to prefer,verb,
 prendre,to take,verb,
 préparer,to prepare,verb,
+prescrire,to prescribe,verb,
 présenter,"to present, to introduce",verb,
 prévoir,"to predict, to foresee",verb,
 prier,"to pray, to beg",verb,
@@ -488,6 +542,7 @@ retourner,"to return, to go back",verb,
 retrouver,"to find again, to meet up with",verb,
 réunir,"to gather together, to join, to get together with",verb,
 réussir,"to succeed in, to manage to",verb,
+revendiquer,"to claim, to demand",verb,
 revenir,"to return, to come back",verb,
 rêver,to dream,verb,
 rire,"to laugh, to joke",verb,
@@ -502,6 +557,8 @@ s’inquiéter,to worry (reflexive verb),verb,
 s’inscrire,"to join, to enroll in",verb,
 s’occuper,to take care of (reflexive),verb,
 sauter,"to jump, to leap",verb,
+se concentrer,"to concentrate oneself, to focus oneself on",verb,
+se contendire,to contradict,verb,
 se dépêcher,to hurry,verb,
 se marier,to get married (to marry oneself),verb,
 se moquer,"to laugh at, to make fun of",verb,
@@ -519,6 +576,7 @@ soigner,"to treat, to nurse, to take care of",verb,
 songer,"to muse, to dream of",verb,
 sortir,"to go out, get out",verb,
 souffler,to blow,verb,
+souffrir,to suffer,verb,
 souhaiter,"to wish, to hope",verb,
 soumettre,"to subjet, to submit, to subdue, to defeat",verb,
 souper,to have supper,verb,
@@ -554,8 +612,6 @@ verser,"to pay in, to deposit",verb,
 violer,"to violate, to rape",verb,
 virer,"to fire, to throw out",verb,
 vivre,"to live, to exist",verb,
-voler,"to fly, to steal",verb,
-voter,to vote,verb,
 forcément,"bound to, necessarily",adverb,
 jadis,"formerly, long ago",adverb,
 actuellement,"currently, at present",adverb,
@@ -634,70 +690,8 @@ toutefois,"however, nonetheless",adverb,
 uniquement,"only, exclusively",adverb,
 voire,"indeed, in fact",adverb,
 y,there,adverb,
-sportif,"sportsman, athlete",noun,m
-complice,accomplice,noun,m/f
-marteau,hammer,noun,m
-quarantaine,quarantine,noun,f
-pierre,stone,noun,f
-revanche,revenge,noun,f
-barbe,beard,noun,f
-fouille,"search, check",noun,f
-prestation,"service, performance, allowance, benefit",noun,f
-échantillon,sample,noun,m
-explosif,explosive,noun,m
-conflit,conflict,noun,m
-expédition,"expedition, outing, dispatch",noun,f
-gardien,"guardian, caretaker",noun,m
-epoux,"husband, spouse",noun,m
-guerrier,"warrior, fighter",noun,m
-incendie,"blaze, fire",noun,m
-pompier,fireman,noun,m
-botte,"boot, bundle",noun,f
-usine,factory,noun,f
-perte,"loss, waste, defeat",noun,f
-routine,routine,noun,f
-interrogatoire,"interrogation, questioning",noun,m
-ceinture,belt,noun,f
-manche,sleeve,noun,m
-symptôme,symptome,noun,m
-terreur,terror,noun,m
-attente,"wait, expectation",noun,m
-casque,helmet,noun,m
-charité,charity,noun,m
-billard,"billiards, pool",noun,m
-sagesse,"wisdom, good sense",noun,m
-apparence,appearance,noun,m
-fréquence,frequency,noun,m
-examens,"exams, inspections",noun,m
-ère,era,noun,m
-gamme,"range, assessment, scale",noun,m
-curiosité,curiosity,noun,m
-tournage,shooting (of a film),noun,m
-ambition,ambition,noun,m
-troupeau,"herd, flock",noun,m
-regret,regret,noun,m
-répondeur,answering machine,noun,m
-refus,refusal,noun,m
-suggestion,suggestion,noun,m
-invention,invention,noun,m
-chantier,building site,noun,m
-championnat,championship,noun,m
-rideau,curtain,noun,m
-cheminée,"fireplace, chimney",noun,m
-torch,torch,noun,m
-banc,bench,noun,m
-philosophie,philosophy,noun,f
-agneau,lamb,noun,m
-amélioration,"enhancement, improvement",noun,m
-bulletin,"report, forecast",noun,m
-crochet,hook,noun,m
-maillot,swimsuit,noun,m
-pyjama,pyjamas,noun,m
-grain,grain,noun,m
-sous-vêtements,underwear,noun,m
-grange,barn,noun,f
-abri,"shelter, refuge",noun,m
 abeille,bee,noun,f
+abri,"shelter, refuge",noun,m
 accompagnement,"accompanying, support",noun,m
 accueil,"welcome, reception",noun,m
 accusation,accusation,noun,m
@@ -707,13 +701,16 @@ acte,"act, action, deed",noun,m
 activité,activity,noun,f
 adversaire,"opponent, enemy",noun,m
 affection,"affection, ailment, affliction",noun,f
+agneau,lamb,noun,m
 agression,"assault, aggression",noun,f
 aise,"ease, pleasure",noun,m
 allure,"look, appearance",noun,f
 altitude,"altitude, height",noun,f
 amateur,"lover, enthusiast, amateur",noun,m
 ambiance,"atmosphere, ambiance",noun,f
+ambition,ambition,noun,m
 âme,soul,noun,f
+amélioration,"enhancement, improvement",noun,m
 aménagement,"arrangement, layout",noun,m
 amitié,friendship,noun,f
 amour,love,noun,m
@@ -721,25 +718,27 @@ ange,"angel, darling",noun,m
 anneau,"ring, circle",noun,m
 antenne,"aerial, antenna",noun,f
 appareil,"apparatus, device",noun,m
+apparence,appearance,noun,m
 apprentissage,learning,noun,m
 araignée,spider,noun,f
 arbitre,"referee, umpire, arbitrator",noun,m
 arbre,tree,noun,m
 argent,money,noun,m
+article,"article, item",noun,m
 artifice,"artifice, trick",noun,m
 ascenseur,elevator,noun,m
 assiette,plate,noun,f
-article,"article, item",noun,m
 atelier,"workshop, studio",noun,m
 attentat,"attack, assault",noun,m
+attente,"wait, expectation",noun,m
 atterrissage,landing (like a plane),noun,m
 augmentation,"increase, rise",noun,f
 automne,autumn,noun,m
 autoroute,"motorway, highway",noun,f
 avance,"early, ahead of, lead, head start",noun,f
 avenir,"future, prospects",noun,m
-avertissement,warning,noun,m
 aventure,"adventure, affair",noun,f
+avertissement,warning,noun,m
 avocat,"lawyer, attorney",noun,m
 bagage,luggage,noun,m
 bagarre,"fight, brawl",noun,f
@@ -749,23 +748,27 @@ bain,"bath, swim",noun,m
 baisse,"drop, fall, decline",noun,f
 balade,"stroll, walk",noun,f
 balai,broom,noun,m
-barrière,"barrier, gate",noun,f
+banc,bench,noun,m
+barbe,beard,noun,f
 barrage,"dam, flood barrier, barricade",noun,m
-bâton,"stick, staff",noun,m
+barrière,"barrier, gate",noun,f
 bateau,boat,noun,m
+bâton,"stick, staff",noun,m
 batterie,"battery, drums",noun,f
 beau,"beautiful, good-looking",noun,m
 besoin,the need,noun,m
 bidon,"can, tin",noun,m
 bijou,jewellery,noun,m
+billard,"billiards, pool",noun,m
 billet,ticket,noun,m
 biscuit,biscuit,noun,m
 bisou,kiss,noun,m
 blé,wheat,noun,m
-bond,"leap, jump",noun,m
 bonbon,sweets,noun,m
+bond,"leap, jump",noun,m
 bonheur,"happiness, joy, good luck",noun,m
 bonté,kindness,noun,f
+botte,"boot, bundle",noun,f
 bouche,"mouth, entrance",noun,f
 bouclier,shield,noun,m
 boue,mud,noun,f
@@ -774,88 +777,101 @@ bout,"endpoint, tip",noun,m
 bracelet,bracelet,noun,m
 brouillard,fog,noun,m
 bruit,"noise, sound",noun,m
+bulletin,"report, forecast",noun,m
 but,"aim, goal, purpose",noun,m
 cabane,"hut, shed",noun,f
 cadeau,"gift, present",noun,m
 calendrier,"calendar, schedule",noun,m
-carnet,"notebook, book of",noun,m
 campagne,"countryside, campaign",noun,f
 capacité,"capacity, ability",noun,f
+carnet,"notebook, book of",noun,m
 carrière,career,noun,f
 casier,"rack, locker",noun,m
+casque,helmet,noun,m
 cauchemar,nightmare,noun,m
+ceinture,belt,noun,f
 centaine,hundred,noun,f
 cercueil,coffin,noun,m
 cesse,stop (usually with preposition ‘sans’),noun,f
-cible,"target, aim",noun,f
-cicatrice,scar,noun,f
-chair,"flesh, meat",noun,f
-changement,change,noun,m
 chagrin,"grief, sorrow",noun,m
+chair,"flesh, meat",noun,f
+championnat,championship,noun,m
+changement,change,noun,m
 chanson,song,noun,f
+chantier,building site,noun,m
 chaos,chaos,noun,m
-chauffage,"heating, heating system",noun,m
 chapitre,chapter,noun,m
 chariot,"wagon, trolley",noun,m
+charité,charity,noun,m
 chasseur,hunter,noun,m
+chauffage,"heating, heating system",noun,m
 chauffeur,driver,noun,m
 chaussette,sock,noun,f
 chemin,"path, way, track",noun,m
+cheminée,"fireplace, chimney",noun,m
 chevalier,knight,noun,m
 chirurgie,surgery,noun,f
 chirurgien,surgeon,noun,m
 chômage,unemployment,noun,m
+cible,"target, aim",noun,f
+cicatrice,scar,noun,f
 ciel,"sky, heaven",noun,m
 cimetière,cemetary,noun,m
 circuit,"circuit, trip, tour",noun,m
 classe,class,noun,f
 coffre,"chest, box, safe, vault",noun,m
+colère,"anger, wrath",noun,f
 colis,parcel,noun,m
-colonie,"colony, summer camp",noun,m
-colonne,column,noun,f
 collier,"necklace, collar, garland",noun,m
 colline,hill,noun,f
-combinaison,combination,noun,f
-commissariat,police station,noun,m
-communauté,community,noun,f
-congé,"holiday, time off",noun,m
-connerie,"stupidity, bullshit (colloquial)",noun,f
-connexion,connection,noun,f
-concurrence,"competition, rivalry",noun,f
-colère,"anger, wrath",noun,f
-confort,comfort,noun,m
+colonie,"colony, summer camp",noun,m
+colonne,column,noun,f
 coma,coma,noun,m
+combinaison,combination,noun,f
 commande,"command, order, control",noun,f
 commerce,"business, commerce",noun,m
+commissariat,police station,noun,m
+communauté,community,noun,f
 compétition,competition,noun,f
+complice,accomplice,noun,m/f
 comportement,behavior,noun,m
+voler,"to fly, to steal",verb,
 concours,"contest, competition",noun,m
+concurrence,"competition, rivalry",noun,f
+conflit,conflict,noun,m
+confort,comfort,noun,m
+congé,"holiday, time off",noun,m
 congé,"holiday, time off",noun,m
 connaissance,"knowledge, conscienceness",noun,f
+connerie,"stupidity, bullshit (colloquial)",noun,f
+connexion,connection,noun,f
 conseil,"piece of advice, council",noun,m
 consommation,"consumption, drink, beverage",noun,f
 contraire,"reverse, opposite",noun,m
 coordonnée,"contact details, coordinates",noun,f
 copine,girlfrield,noun,f
 corde,"string, cord, rope",noun,f
-cour,"courtyard, yard",noun,f
 couleur,color,noun,f
 couloir,"hallway, corridor",noun,m
+cour,"courtyard, yard",noun,f
 couteau,knife,noun,m
 crainte,"fright, fear, doubt",noun,f
 cri,"cries, shouts",noun,m
 crise,"crisis, outbreak",noun,f
+crochet,hook,noun,m
 croissance,growth,noun,f
 cuir,leather,noun,m
+curiosité,curiosity,noun,m
 décès,death,noun,m
 déchet,"trash, garbage",noun,m
+décor,"decor, scenery, decoration",noun,m
 découverte,discovery,noun,f
 défi,"challenge, defiance",noun,m
 dégât,"damage, harm",noun,m
-démarche,"step, approach, gait, walk",noun,f
-dent,tooth,noun,f
 délai,"time limit, extension",noun,m
 délire,"excitation, frenzy, delirium",noun,m
+démarche,"step, approach, gait, walk",noun,f
+dent,tooth,noun,f
 dépense,"expenses, spending, expenditure",noun,f
 désastre,disaster,noun,m
 désir,desire,noun,m
@@ -872,10 +888,11 @@ donnée,"data, information",noun,f
 douche,shower,noun,f
 douleur,"pain, suffering",noun,f
 drame,"drama, tragedy, fuss (colloquial)",noun,m
-drapeau,flag,noun,m
 drap,sheet,noun,m
+drapeau,flag,noun,m
 droite,right side (as opposed to left side),noun,f
 écart,"distance, gap, margin",noun,m
+échantillon,sample,noun,m
 échec,failure,noun,m
 écran,screen,noun,m
 effet,"effect, result",noun,m
@@ -888,15 +905,18 @@ endroit,"place, location, spot",noun,m
 enjeu,"stakes, issues (“in play”)",noun,m
 ennui,"trouble, problem, boredom",noun,f
 enquête,"investigation, inquiry, survey",noun,f
+enterrement,"burial, funeral",noun,m
 entraînement,training,noun,m
 entraîneur,"trainer, coach",noun,m
 entrepôt,"warehouse, depot",noun,m
-enterrement,"burial, funeral",noun,m
 entreprise,"enterprise, company",noun,f
 entretien,"maintenance, upkeep",noun,m
 épaule,shoulder,noun,f
+épicerie,grocery,noun,f
+epoux,"husband, spouse",noun,m
 épreuve,"test, trial, hardship",noun,f
 épuisé,exhausted,noun,m
+ère,era,noun,m
 escalier,stairs,noun,m
 esclave,slave,noun,m
 espace,"space (e.g., as in a house)",noun,m
@@ -905,35 +925,46 @@ essai,"try, attempt, trial",noun,m
 étage,"floor, story",noun,m
 étranger,"foreigner, stranger",noun,m
 événement,event,noun,m
+examens,"exams, inspections",noun,m
 exercice,exercise,noun,m
+expédition,"expedition, outing, dispatch",noun,f
+explosif,explosive,noun,m
 façon,"way, making",noun,f
 faute,"fault, mistake",noun,f
 fauteuil,armchair,noun,m
-fermeture,"closing, shutting",noun,f
 faveur,favor,noun,f
-foi,"faith, belief",noun,f
+fermeture,"closing, shutting",noun,f
 fierté,pride,noun,f
 filet,"net, string bag",noun,m
 flamme,"flame, sparkle, passion",noun,f
 fleuve,river,noun,m
 flux,"flow, stream, incoming tide",noun,m
+foi,"faith, belief",noun,f
 folie,"folly, madness",noun,f
+fouille,"search, check",noun,f
 foule,crowd,noun,f
 four,oven,noun,m
 fourchette,"fork, range, spread",noun,f
+fréquence,frequency,noun,m
 fuite,"leak, flight, escape",noun,f
 fusil,"rifle, gun",noun,m
 galaxie,galaxy,noun,f
+gamme,"range, assessment, scale",noun,m
 gant,glove,noun,m
+gardien,"guardian, caretaker",noun,m
 gauche,left side (as opposed to right side),noun,f
 geste,"gesture, movement",noun,m
 goût,"taste, flavor",noun,m
 goutte,"drop, bead, a very little bit",noun,f
+grain,grain,noun,m
+grange,barn,noun,f
 grenier,attic,noun,m
 grippe,"flu, influenza",noun,f
 groupe,group,noun,m
 guerrier,"warrior, fighter",noun,m
+guerrier,"warrior, fighter",noun,m
 harcèlement,harassment,noun,m
+haricot,bean,noun,m
 hasard,"fate, luck, chance",noun,m
 havre,haven,noun,m
 héritage,"inheritance, heritage",noun,m
@@ -943,6 +974,7 @@ imbécile,"idiot, imbecile",noun,m
 immeuble,"building, real estate",noun,m
 impact,"impact, influence",noun,m
 impôt,"tax, tax office",noun,m
+incendie,"blaze, fire",noun,m
 individu,individual,noun,m
 infection,infection,noun,f
 infirmier,nurse,noun,f
@@ -951,7 +983,9 @@ ingénieur,engineer,noun,m
 instruction,"instruction, direction",noun,f
 intention,"intention, intent",noun,f
 interprète,"interpreter, spokesperson, performer",noun,m
+interrogatoire,"interrogation, questioning",noun,m
 invasion,invasion,noun,f
+invention,invention,noun,m
 investissement,investment,noun,m
 jouet,"toys, playthings",noun,m
 joueur,"player, gambler",noun,m
@@ -972,15 +1006,18 @@ loup,wolf,noun,m
 loyer,rent,noun,m
 lycée,high school,noun,m
 magazine,magazine,noun,m
+maillot,swimsuit,noun,m
 malédiction,"curse, scourge",noun,f
 malentendu,misunderstanding,noun,m
 malheur,"tragedy, misfortune, bad luck",noun,m
+manche,sleeve,noun,m
 manière,"way, manner, style",noun,f
 manuel,"textbook, guide, handbook",noun,m
-matériaux,materials,noun,m
 maquillage,make-up,noun,m
 marchand,"shopkeeper, merchant",noun,m
 marchandise,"merchandise, goods",noun,f
+marteau,hammer,noun,m
+matériaux,materials,noun,m
 matière,"subject, discipline, matter, substance (e.g., school subject)",noun,f
 mélange,"mixture, mix",noun,m
 menace,"threats, threatening behaviour",noun,f
@@ -999,9 +1036,6 @@ montagne,mountain,noun,f
 montant,"total, sum",noun,m
 morceau,"bit, piece",noun,m
 motif,"motive, reason, pattern",noun,m
-objection,objection,noun,f
-ordure,"trash, litter, rubbish",noun,f
-otage,hostage,noun,m
 navette,shuttle,noun,f
 navire,ship,noun,m
 nécessité,"necessity, need",noun,f
@@ -1013,6 +1047,7 @@ niveau,level,noun,m
 noix,"walnut, nuts",noun,f
 nourriture,"food, nutrition",noun,f
 objectif,"objective, target",noun,m
+objection,objection,noun,f
 obscurité,"darkness, obscurity",noun,f
 occasion,"opportunity, chance",noun,f
 odeur,"odor, smell",noun,f
@@ -1020,8 +1055,10 @@ ongle,nail,noun,f
 opportunité,opportunity,noun,f
 orage,"thunderstorm, storm",noun,m
 ordinateur,computer,noun,f
+ordure,"trash, litter, rubbish",noun,f
 oreille,ear,noun,f
 oreiller,pillow,noun,m
+otage,hostage,noun,m
 outil,tool,noun,m
 paix,peace,noun,f
 panier,basket,noun,m
@@ -1034,12 +1071,16 @@ parole,"words, lyrics",noun,f
 passager,"passenger, traveller",noun,m
 passé,the past,noun,m
 patrimoine,"heritage, inheritance",noun,m
+paysan,"farmer, peasant",noun,m
 peau,skin,noun,f
 peine,"effort, exertion",noun,f
 peinture,"painting, paint",noun,f
 péril,"peril, danger",noun,m
 perte,"loss, waste, defeat",noun,f
+perte,"loss, waste, defeat",noun,f
+philosophie,philosophy,noun,f
 photographe,photographer,noun,m
+pierre,stone,noun,f
 piscine,"pool, swimming pool",noun,f
 piste,"trail, runway",noun,f
 placard,"cupboard, closet",noun,m
@@ -1050,12 +1091,13 @@ plaisanterie,joke,noun,f
 plaisir,pleasure,noun,m
 pluie,rain,noun,f
 plume,"feather, plume, quill",noun,f
-paysan,"farmer, peasant",noun,m
 plupart,"most, the most part",noun,f
 pneu,tire,noun,m
 poche,pocker,noun,f
 poids,weight,noun,m
+poignet,wrist,noun,m
 poing,fist,noun,m
+pompier,fireman,noun,m
 portefeuille,"wallet, purse, portfolio",noun,m
 potentiel,potentia,noun,m
 poubelle,trashbin,noun,f
@@ -1063,6 +1105,7 @@ poumon,lung,noun,m
 pourcentage,percentage,noun,m
 présence,"presence, attendance",noun,f
 pression,"pressure, stress",noun,f
+prestation,"service, performance, allowance, benefit",noun,f
 prêtre,priest,noun,m
 preuve,"proof, evidence",noun,f
 prière,prayer,noun,f
@@ -1073,42 +1116,51 @@ promenade,"walk, stroll, promenade",noun,f
 promesse,promise,noun,f
 prudence,"caution, prudence",noun,f
 psychiatre,psychiatrist,noun,m
-pull,"sweater, pullover",noun,m
-puits,well,noun,m
 puissance,power,noun,f
+puits,well,noun,m
+pull,"sweater, pullover",noun,m
 punition,punishment,noun,f
+pyjama,pyjamas,noun,m
+quarantaine,quarantine,noun,f
 quartier,"neighborhood, quarter",noun,m
 raison,reason,noun,f
 réalisateur,"film maker, director, producer",noun,m
 recette,recipe,noun,f
-règlement,"regulations, rules, settlement",noun,m
-relève,"relief, replacement, successor",noun,f
 recherche,"research, search",noun,f
 reconnaissance,"recognition, gratitude",noun,f
 recours,"resort, solution, plea, submission",noun,m
 recrutement,recruitment,noun,m
 refuge,refuge,noun,m
+refus,refusal,noun,m
 regard,"look, glance, sight",noun,m
+règlement,"regulations, rules, settlement",noun,m
+regret,regret,noun,m
+relève,"relief, replacement, successor",noun,f
 remède,remedy,noun,m
 remise,"discount, reduction",noun,f
 rencard,"date (romantic), tip, info",noun,m
 renfort,"reinforcement, backup",noun,f
 repas,meal,noun,m
+répondeur,answering machine,noun,m
 repos,"rest, holiday",noun,f
 requin,shark,noun,m
 résultat,result,noun,m
 retraite,"retirement, pension, retreat",noun,f
 réunion,meeting,noun,m
 réussite,success,noun,f
+revanche,revenge,noun,f
 réveil,"alarm clock, waking",noun,m
+rideau,curtain,noun,m
 risque,risk,noun,m
 riz,rice,noun,m
 rocher,"rock, boulder",noun,f
 roman,novel,noun,m
+routine,routine,noun,f
 rubrique,"section, column",noun,f
 rumeur,rumor,noun,f
 rupture,"rupture, break-up, breach, shortage",noun,f
 sacrifice,sacrifice,noun,m
+sagesse,"wisdom, good sense",noun,m
 salade,"salad, lettuce",noun,f
 salarié,employee,noun,m
 satellite,satellite,noun,m
@@ -1133,42 +1185,54 @@ sorte,"sort, kind",noun,f
 souci,"worry, concern",noun,m
 souffrance,suffering,noun,f
 souris,mouse,noun,f
+sous-vêtements,underwear,noun,m
 soutien,"backing, support",noun,m
+sportif,"sportsman, athlete",noun,m
 squelette,skeleton,noun,m
 style,style,noun,m
 stylo,pen,noun,m
 sueur,sweat,noun,f
+suggestion,suggestion,noun,m
 suivant,the next one,noun,m
 survivant,survivor,noun,m
 symbole,symbol,noun,m
+symptôme,symptome,noun,m
 synthèse,"synthesis, blend, summary, overview",noun,f
 tableau,"painting, picture",noun,m
+voter,to vote,verb,
 tache,"stain, mark, spot",noun,f
+taille,"height, size, waistline",noun,f
 tatouage,tattoo,noun,m
+témoin,witness,noun,m
+tempête,storm,noun,f
 tendance,"tendency, trend",noun,f
 ténèbres,"darkness, obscurity",noun,f
 tentative,attempt,noun,f
 tenue,"behavior, conduct",noun,f
-témoin,witness,noun,m
-tempête,storm,noun,f
+terreur,terror,noun,m
 testament,"will, legacy",noun,m
 tiroir,drawer,noun,m
 tissu,fabric,noun,m
 toile,"painting, canvas, web",noun,m
 toit,roof,noun,m
 tonnerre,thunder,noun,m
+torch,torch,noun,m
 tort,"wrong, fault",noun,m
+tournage,shooting (of a film),noun,m
 tournoi,tournament,noun,m
 traduction,translation,noun,f
 tragédie,tragedy,noun,f
 trahison,"treason, disloyalty",noun,f
 traitement,treatment,noun,m
+trajet,"journey, flight, ride",noun,m
 transfert,transfer,noun,m
 trou,"holes, gaps",noun,m
+troupeau,"herd, flock",noun,m
 tuyau,"tip, pipe, hose",noun,m
+usine,factory,noun,f
 valeur,value,noun,f
-vallée,valley,noun,f
 valise,suitcase,noun,f
+vallée,valley,noun,f
 vedette,"star, launch",noun,f
 veine,vein,noun,m
 vélo,"bike, cycling",noun,m
@@ -1178,11 +1242,11 @@ vêtement,clothing,noun,m
 vie,life,noun,f
 visage,face,noun,m
 vitesse,"speed, gear",noun,f
-voiture,car,noun,f
 voisin,neighbor,noun,m
+voiture,car,noun,f
 vol,flight,noun,m
 volontaire,volunteer,noun,m
 volonté,"will, wish",noun,f
 voyage,"journey, trip",noun,m
-taille,"height, size, waistline",noun,f
+voyou,"lout, thug",noun,m
 zoo,zoo,noun,m

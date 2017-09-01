@@ -11,6 +11,9 @@ export const SET_TRANSLATED_TEXT = 'SET_TRANSLATED_TEXT';
 export const TOGGLE_TRANSLATION_DISPLAY = 'TOGGLE_TRANSLATION_DISPLAY';
 export const FETCH_PROGRESS_SUCCESS = 'FETCH_PROGRESS_SUCCESS';
 export const POST_RESPONSE_SUCCESS = 'POST_RESPONSE_SUCCESS';
+export const FETCH_TAGS_SUCCESS = 'FETCH_TAGS_SUCCESS';
+export const ACTIVATE_TAG = 'ACTIVATE_TAG';
+export const LOAD_QUIZLET = 'LOAD_QUIZLET';
 
 export function activateStrategy(strategy) {
   return {
@@ -73,10 +76,24 @@ export function fetchProgressSuccess(json) {
   }
 }
 
+export function fetchTagsSuccess(json) {
+  return {
+    type: FETCH_TAGS_SUCCESS,
+    tags: json.data
+  }
+}
+
 export function setLanguage(lang) {
   return {
     type: SET_LANGUAGE,
     lang: lang
+  }
+}
+
+export function fetchQuizletSuccess(json) {
+  return {
+    type: LOAD_QUIZLET,
+    quizletList: json
   }
 }
 
@@ -102,6 +119,14 @@ export function setResponseText(text) {
 export function postResponseSuccess() {
   return {
     type: POST_RESPONSE_SUCCESS
+  }
+}
+
+export function toggleTag(id, active) {
+  return {
+    type: ACTIVATE_TAG,
+    tagId: id,
+    active: active
   }
 }
 
@@ -147,11 +172,11 @@ export function translateText(text) {
   }
 }
 
-export function fetchVocab(vocabType, vocabTypeCount) {
+export function fetchVocab(vocabType, vocabTypeCount, lang) {
   return function (dispatch) {
     dispatch(requestVocab());
 
-    return fetch('api/vocab?type='+ vocabType + '&count=' + vocabTypeCount).then((resp) => {
+    return fetch('api/vocab?type='+ vocabType + '&count=' + vocabTypeCount + '&lang=' + lang).then((resp) => {
       return resp.json();
     }).then((json) => {
       dispatch(fetchVocabSuccess(vocabType, json));
@@ -166,5 +191,29 @@ export function fetchProgress() {
     }).then((json) => {
       dispatch(fetchProgressSuccess(json));
     })
+  }
+}
+
+export function loadTags() {
+  return (dispatch) => {
+    return fetch('api/tags').then((resp) => {
+      return resp.json();
+    }).then((json) => {
+      dispatch(fetchTagsSuccess(json));
+    })
+  }
+}
+
+export function fetchQuizletList(setId) {
+  const fetchURL = `fetch_quizlet?set_id=${setId}`;
+
+  // Ex: https://api.quizlet.com/2.0/sets/30807680?client_id=2qZMs5stge&whitespace=1
+  return (dispatch) => {
+    return fetch(fetchURL).then((resp) => {
+      return resp.json();
+    }).then((json) => {
+      var parsed = JSON.parse(json);
+      dispatch(fetchQuizletSuccess(parsed));
+    });
   }
 }

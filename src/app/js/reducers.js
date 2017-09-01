@@ -8,6 +8,9 @@ import {
   SET_TRANSLATED_TEXT,
   TOGGLE_TRANSLATION_DISPLAY,
   FETCH_PROGRESS_SUCCESS,
+  FETCH_TAGS_SUCCESS,
+  ACTIVATE_TAG,
+  LOAD_QUIZLET,
   fetchVocab
 } from './actions';
 import { createStore, combineReducers, applyMiddleware } from 'redux';
@@ -84,6 +87,15 @@ export function adjectiveCount(state = 0, action) {
   }
 }
 
+function tags(state = [], action) {
+  switch (action.type) {
+    case FETCH_TAGS_SUCCESS:
+      return action.tags;
+    default:
+      return state;
+  }
+}
+
 function parseVocabTypes(vocabState, action) {
   console.log(action);
   switch (action.vocabType) {
@@ -118,7 +130,6 @@ export function prompt(state = initialPromptState, action) {
 }
 
 export function isPlainPrompt(state = false, action) {
-  console.log(action);
   switch (action.type) {
     case FETCH_PROMPT_SUCCESS:
       return action.prompt.type === 'translate'
@@ -139,6 +150,23 @@ export function vocab(state = initialVocabState, action) {
         vocab: parseVocabTypes(state.vocab, action),
         lastUpdated: action.receivedAt
       })
+    default:
+      return state;
+  }
+}
+
+export function activeTags(state = [], action) {
+  switch (action.type) {
+    case ACTIVATE_TAG:
+      if (action.active) {
+        if (state.includes(action.tagId)) {
+          return state;
+        } else {
+          return state.slice(0).concat(action.tagId);
+        }
+      } else {
+        return state.filter(v => v !== action.tagId);
+      }
     default:
       return state;
   }
@@ -180,6 +208,15 @@ export function allResponses(state = [], action) {
   }
 }
 
+export function quizletList(state = {}, action) {
+  switch (action.type) {
+    case LOAD_QUIZLET:
+      return action.quizletList;
+    default:
+      return state;
+  }
+}
+
 const reducers = combineReducers({
   activeStrategy,
   verbCount,
@@ -192,6 +229,9 @@ const reducers = combineReducers({
   showTranslation,
   translation,
   isPlainPrompt,
+  activeTags,
+  tags,
+  quizletList,
   allResponses
 });
 
