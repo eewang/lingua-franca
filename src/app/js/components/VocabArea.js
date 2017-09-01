@@ -1,16 +1,16 @@
 import React from 'react';
 import classNames from 'classnames';
-import { activateStrategy } from '../actions';
+import { activateStrategy, setLanguage } from '../actions';
 import ActiveVocabSelector from '../containers/ActiveVocabSelector';
 import { store } from '../reducers';
 import { fetchVocab } from '../actions';
 
 const FetchVocabBtn = React.createClass({
   onClick() {
-    store.dispatch(fetchVocab('verb', store.getState().verbCount));
-    store.dispatch(fetchVocab('noun', store.getState().nounCount));
-    store.dispatch(fetchVocab('adverb', store.getState().adverbCount));
-    store.dispatch(fetchVocab('adjective', store.getState().adjectiveCount));
+    store.dispatch(fetchVocab('verb', store.getState().verbCount, this.props.lang));
+    store.dispatch(fetchVocab('noun', store.getState().nounCount, this.props.lang));
+    store.dispatch(fetchVocab('adverb', store.getState().adverbCount, this.props.lang));
+    store.dispatch(fetchVocab('adjective', store.getState().adjectiveCount, this.props.lang));
     store.dispatch(setLanguage(this.props.lang));
   },
 
@@ -41,6 +41,7 @@ export const VocabArea = React.createClass({
         })}
         <FetchVocabBtn lang='french'/>
         <FetchVocabBtn lang='english'/>
+        <FetchVocabBtn lang='spanish'/>
       </div>
     )
   }
