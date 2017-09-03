@@ -76,7 +76,7 @@ export const PracticeArea = React.createClass({
       theme: 'snow'
     });
     quill.addModule('toolbar', {
-      container: '#toolbar'
+      container: `.${this.toolbarSelector()}`
     });
     this.setState({quill: quill});
   },
@@ -156,13 +156,22 @@ export const PracticeArea = React.createClass({
     )
   },
 
+  toolbarSelector() {
+    const indexCount = this.props.indexCount || 0;
+    return `toolbar-${indexCount}`;
+  },
+
+  toolbarClasses() {
+    return classNames(this.toolbarSelector(), 'custom-toolbar-styles');
+  },
+
   render() {
     return (
       <div className={this.practiceAreaClasses()}>
         {this.renderVocab()}
         <div className={this.inputWrapperClasses()}>
           {this.renderTranslation()}
-          <div id="toolbar">
+          <div className={this.toolbarClasses()}>
             <span className='ql-format-group'>
               <button className="ql-bold ql-format-button"></button>
               <button className="ql-italic ql-format-button"></button>
@@ -171,7 +180,9 @@ export const PracticeArea = React.createClass({
             {this.renderActionBtn('Submit', this.submitText)}
             {this.renderActionBtn('Translate', this.translateText)}
           </div>
-          <div className={this.inputAreaClasses()}></div>
+          <div className="input-area-wrapper">
+            <div className={this.inputAreaClasses()}></div>
+          </div>
         </div>
       </div>
     )

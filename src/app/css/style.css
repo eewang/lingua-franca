@@ -85,7 +85,6 @@
 
 .practice-area {
   margin-top: 1em;
-  min-height: 30em;
   position: relative;
 }
 
@@ -123,10 +122,9 @@
   margin-left: 1em;
 }
 
-#toolbar {
+.custom-toolbar-styles {
   padding-left: 1em;
   border-bottom: 1px solid gray;
-
 }
 
 .practice-input {
@@ -134,6 +132,10 @@
   margin-left: 1em;
   margin-top: 1em;
   width: 100%;
+}
+
+.input-area-wrapper {
+  height: 10em;
 }
 
 .vocab-word {
@@ -150,7 +152,6 @@
 
 .editor-wrapper.no-vocab {
   position: static;
-  max-height: 30em;
   width: 100%;
 }
 
@@ -264,4 +265,8 @@
 .active {
   background-color: yellow;
   color: black;
+}
+
+.quizlet-wrapper {
+  margin-top: 1em;
 }
